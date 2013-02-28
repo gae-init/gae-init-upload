@@ -15,6 +15,7 @@ import auth
 import util
 import model
 import admin
+import resource
 
 
 @app.route('/')
@@ -136,10 +137,10 @@ def user_list():
 @app.errorhandler(400)
 @app.errorhandler(401)
 @app.errorhandler(403)
-@app.errorhandler(404)
+@app.errorhandler(404)  # Not found
 @app.errorhandler(410)
-@app.errorhandler(418)
-@app.errorhandler(500)
+@app.errorhandler(418)  # I'm a teapot
+@app.errorhandler(500)  # Server error
 def error_handler(e):
   try:
     e.code

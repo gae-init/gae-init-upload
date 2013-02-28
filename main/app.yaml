@@ -22,6 +22,9 @@ handlers:
   static_dir: static/
   expiration: 1000d
 
+- url: /serve/.*
+  script: serve.app
+
 - url: /.*
   script: main.app
 

@@ -11,6 +11,14 @@
       </a>
       <div class="nav-collapse collapse">
         <ul class="nav">
+          # if current_user.id > 0
+            <li class="{% if html_class == 'resource-upload' %} active {% endif %}">
+              <a href="{{url_for('resource_upload')}}"><i class="icon-cloud-upload"></i> Resource Upload</a>
+            </li>
+            <li class="{% if html_class == 'resource-list' %} active {% endif %}">
+              <a href="{{url_for('resource_list')}}"><i class="icon-th-list"></i> Resource List</a>
+            </li>
+          # endif
           # if config.CONFIG_DB.feedback_email
             <li class="{% if html_class == 'feedback' %} active {% endif %}">
               <a href="{{url_for('feedback')}}"><i class="icon-comment"></i> Feedback</a>

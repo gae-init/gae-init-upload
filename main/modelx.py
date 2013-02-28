@@ -1,6 +1,7 @@
 from google.appengine.ext import ndb
 import md5
 import util
+import flask
 
 
 class BaseX(object):
@@ -47,4 +48,35 @@ class UserX(object):
   def avatar_url(self):
     return 'http://www.gravatar.com/avatar/%s?d=identicon&r=x' % (
         md5.new(self.email or self.name).hexdigest().lower()
+      )
+
+
+class ResourceX(object):
+  @ndb.ComputedProperty
+  def size_human(self):
+    return util.size_human(self.size or 0)
+
+  @ndb.ComputedProperty
+  def download_url(self):
+    if self.key:
+      return '%s%s' % (
+          flask.request.url_root[:-1],
+          flask.url_for('resource_download', resource_id=self.key.id()),
+        )
+    return None
+
+  @ndb.ComputedProperty
+  def view_url(self):
+    if self.key:
+      return '%s%s' % (
+          flask.request.url_root[:-1],
+          flask.url_for('resource_view', resource_id=self.key.id()),
+        )
+    return None
+
+  @ndb.ComputedProperty
+  def serve_url(self):
+    return '%s/serve/%s' % (
+        flask.request.url_root[:-1],
+        self.blob_key,
       )

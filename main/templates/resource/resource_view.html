@@ -1,0 +1,62 @@
+# extends 'base.html'
+
+# block content
+  <div class="page-header">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="span4">
+      <form class="form" method="POST" action=".">
+        <fieldset>
+          <div class="control-group ">
+            <label class="control-label" for="name">Name</label>
+            <div class="controls">
+              <input class="span4" id="name" name="name" type="text" value="{{resource_db.name}}" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="control-group ">
+            <label class="control-label" for="content_type">Content Type</label>
+            <div class="controls">
+              <input class="span4" id="content_type" name="content_type" type="text" value="{{resource_db.content_type}}" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="control-group ">
+            <label class="control-label" for="size">Size</label>
+            <div class="controls">
+              <input class="span4" id="size" name="size" type="text" value="{{resource_db.size_human}}" title="{{resource_db.size}} Bytes" readonly="readonly">
+            </div>
+          </div>
+
+          <a class="btn btn-success btn-block" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
+            <i class="icon-cloud-download"></i> Download
+          </a>
+          <a class="btn btn-primary btn-block" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
+            <i class="icon-edit"></i> Update
+          </a>
+          <button class="btn btn-danger btn-block btn-delete"
+              data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
+              data-redirect-url="{{url_for('resource_list')}}"
+            >
+            <i class="icon-trash"></i> Delete
+          </button>
+          <a class="btn btn-info btn-block" href="{{url_for('resource_list')}}">
+            <i class="icon-th-list"></i> View All
+          </a>
+        </fieldset>
+      </form>
+    </div>
+    # if resource_db.image_url
+      <div class="span4">
+        <div class="image-preview">
+          <img class="img-polaroid" src="{{resource_db.image_url}}=s512">
+        </div>
+      </div>
+    # endif
+  </div>
+# endblock
+

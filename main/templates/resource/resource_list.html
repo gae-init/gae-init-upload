@@ -1,0 +1,91 @@
+# extends 'base.html'
+
+# block content
+  <div class="page-header">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th class="span1">ID</th>
+            <th class="span6">
+              # if request.args.get('order') == 'name'
+                <a href="{{url_for('resource_list', order='-name')}}">Name <i class="icon-chevron-up"></i></a>
+              # elif request.args.get('order') == '-name'
+                <a href="{{url_for('resource_list', order='name')}}">Name <i class="icon-chevron-down"></i></a>
+              #else
+                <a href="{{url_for('resource_list', order='name')}}">Name</a>
+              #endif
+            </th>
+            <th class="span2">
+              # if request.args.get('order') == 'content_type'
+                <a href="{{url_for('resource_list', order='-content_type')}}">Content Type <i class="icon-chevron-up"></i></a>
+              # elif request.args.get('order') == '-content_type'
+                <a href="{{url_for('resource_list', order='content_type')}}">Content Type <i class="icon-chevron-down"></i></a>
+              #else
+                <a href="{{url_for('resource_list', order='content_type')}}">Content Type</a>
+              #endif
+            </th>
+            <th class="span4">
+              # if request.args.get('order') == 'created'
+                <a href="{{url_for('resource_list', order='-created')}}">Created <i class="icon-chevron-up"></i></a>
+              # elif request.args.get('order') == '-created'
+                <a href="{{url_for('resource_list', order='created')}}">Created <i class="icon-chevron-down"></i></a>
+              #else
+                <a href="{{url_for('resource_list', order='created')}}">Created</a>
+              #endif
+            </th>
+            <th class="span2">
+              # if request.args.get('order') == 'size'
+                <a href="{{url_for('resource_list', order='-size')}}">Size <i class="icon-chevron-up"></i></a>
+              # elif request.args.get('order') == '-size'
+                <a href="{{url_for('resource_list', order='size')}}">Size <i class="icon-chevron-down"></i></a>
+              #else
+                <a href="{{url_for('resource_list', order='size')}}">Size</a>
+              #endif
+            </th>
+            <th class="span1">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          # for resource_db in resource_dbs
+            <tr id="{{resource_db.key.urlsafe()}}">
+              <td>{{resource_db.key.id()}}</td>
+              <td>
+                <a href="{{url_for('resource_view', resource_id=resource_db.key.id())}}">
+                  {{resource_db.name}}
+                </a>
+              </td>
+              <td>{{resource_db.content_type}}</td>
+              <td>{{resource_db.created_utc}}</td>
+              <td>
+                {{resource_db.size_human}}
+              </td>
+              <td nowrap>
+                <a class="btn btn-mini btn-primary" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
+                  <i class="icon-edit"></i>
+                </a>
+                <a class="btn btn-mini btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
+                  <i class="icon-cloud-download"></i>
+                </a>
+                <button class="btn btn-mini btn-danger btn-delete"
+                    data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
+                    data-target="#{{resource_db.key.urlsafe()}}"
+                  >
+                  <i class="icon-trash"></i>
+                </button>
+              </td>
+            </tr>
+          # endfor
+        </tbody>
+      </table>
+    </div>
+  </div>
+# endblock

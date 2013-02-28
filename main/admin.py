@@ -10,11 +10,14 @@ from main import app
 
 
 class ConfigUpdateForm(wtf.Form):
+  analytics_id = wtf.TextField(
+      'Analytics ID', [wtf.validators.optional()]
+    )
   brand_name = wtf.TextField(
       'Brand Name', [wtf.validators.required()]
     )
-  analytics_id = wtf.TextField(
-      'Analytics ID', [wtf.validators.optional()]
+  bucket_name = wtf.TextField(
+      'Bucket Name', [wtf.validators.optional()]
     )
   facebook_app_id = wtf.TextField(
       'Facebook ID', [wtf.validators.optional()]
@@ -49,6 +52,7 @@ def admin_config_update():
   if form.validate_on_submit():
     config_db.analytics_id = form.analytics_id.data
     config_db.brand_name = form.brand_name.data
+    config_db.bucket_name = form.bucket_name.data
     config_db.facebook_app_id = form.facebook_app_id.data
     config_db.facebook_app_secret = form.facebook_app_secret.data
     config_db.feedback_email = form.feedback_email.data
@@ -63,6 +67,7 @@ def admin_config_update():
   if not form.errors:
     form.analytics_id.data = config_db.analytics_id
     form.brand_name.data = config_db.brand_name
+    form.bucket_name.data = config_db.bucket_name
     form.facebook_app_id.data = config_db.facebook_app_id
     form.facebook_app_secret.data = config_db.facebook_app_secret
     form.feedback_email.data = config_db.feedback_email

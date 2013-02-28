@@ -13,7 +13,8 @@ class Base(ndb.Model, modelx.BaseX):
 
 class Config(Base, modelx.ConfigX):
   analytics_id = ndb.StringProperty(default='')
-  brand_name = ndb.StringProperty(default='gae-init')
+  brand_name = ndb.StringProperty(default='gae-init-upload')
+  bucket_name = ndb.StringProperty(default='')
   facebook_app_id = ndb.StringProperty(default='')
   facebook_app_secret = ndb.StringProperty(default='')
   feedback_email = ndb.StringProperty(default='')
@@ -23,6 +24,7 @@ class Config(Base, modelx.ConfigX):
   _PROPERTIES = Base._PROPERTIES.union(set([
       'analytics_id',
       'brand_name',
+      'bucket_name',
       'facebook_app_id',
       'facebook_app_secret',
       'feedback_email',
@@ -46,4 +48,24 @@ class User(Base, modelx.UserX):
 
   _PROPERTIES = Base._PROPERTIES.union(set([
       'name', 'username', 'avatar_url',
+    ]))
+
+
+class Resource(Base, modelx.ResourceX):
+  user_key = ndb.KeyProperty(kind=User, required=True)
+  blob_key = ndb.BlobKeyProperty(required=True)
+  name = ndb.StringProperty(required=True)
+  image_url = ndb.StringProperty(default='')
+  content_type = ndb.StringProperty(default='')
+  size = ndb.IntegerProperty(default=0)
+
+  _PROPERTIES = Base._PROPERTIES.union(set([
+      'name',
+      'image_url',
+      'content_type',
+      'size',
+      'size_human',
+      'download_url',
+      'view_url',
+      'serve_url',
     ]))

@@ -158,6 +158,15 @@ def uuid():
   return str(uuid4()).replace('-', '')
 
 
+def size_human(nbytes):
+  for suffix in ['B', 'KB', 'MB', 'GB', 'TB']:
+    if nbytes < 1000:
+      if suffix == 'B':
+        return '%.0f %s' % (nbytes, suffix)
+      return '%.1f %s' % (nbytes, suffix)
+    nbytes /= 1024.0
+
+
 ################################################################################
 # In Time
 ################################################################################

@@ -1,0 +1,52 @@
+# extends 'base.html'
+
+# block content
+  <div class="page-header">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="span4">
+      <form class="form" method="POST" action=".">
+        <fieldset>
+          {{form.csrf_token}}
+
+          # set form_field = form.name
+          # include 'bit/form_text_field.html'
+
+          <div class="control-group ">
+            <label class="control-label" for="content_type">Content Type</label>
+            <div class="controls">
+              <input class="span4" id="content_type" name="content_type" type="text" value="{{resource_db.content_type}}" readonly="readonly">
+            </div>
+          </div>
+
+          <div class="control-group ">
+            <label class="control-label" for="size">Size</label>
+            <div class="controls">
+              <input class="span4" id="size" name="size" type="text" value="{{resource_db.size_human}}" title="{{resource_db.size}} Bytes" readonly="readonly">
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-loading" data-loading-text="Updating..">
+            <i class="icon-save"></i> Save
+          </button>
+
+          <a class="btn btn-info btn-block" href="{{url_for('resource_view', resource_id=resource_db.key.id())}}">
+            <i class="icon-remove"></i> Cancel
+          </a>
+        </fieldset>
+      </form>
+    </div>
+    # if resource_db.image_url
+      <div class="span4">
+        <div class="image-preview">
+          <img class="img-polaroid" src="{{resource_db.image_url}}=s512">
+        </div>
+      </div>
+    # endif
+  </div>
+# endblock
+

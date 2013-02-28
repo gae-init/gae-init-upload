@@ -1,0 +1,54 @@
+# extends 'base.html'
+
+# block content
+  <div class="page-header">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <form id="upload" class="form-horizontal " method="POST" action="{{upload_url}}"  enctype='multipart/form-data'>
+        <fieldset>
+          <div class='control-group'>
+            <label class="control-label">Choose Files to Upload</label>
+            <div class='controls pretty-file'>
+              <input class="file hide" type="file" name="file[]" multiple="multiple"
+                  data-get-upload-url="{{get_upload_url}}"
+                >
+              <div class="input-append">
+                <input class="input-large" type="text">
+                <a href="#" class="btn">Browse</a>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <div class="drop-area well">
+        or drop files here
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span12">
+      <ul class="thumbnails resource-uploads">
+        <li class="span3 hide">
+          <div class="thumbnail">
+            <div class="preview" style="background-image: url(http://i.stack.imgur.com/oJKoh.png)"></div>
+            <h5>Thumbnail labelThumbnail labelThumbnail labelThumbnail labelThumbnail label</h5>
+            <div class="progress">
+              <div class="bar" style="width: 10%;">Hello word</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+# endblock

@@ -44,9 +44,12 @@ SCRIPTS = {
       'src/coffee/common/util.coffee',
       'src/coffee/common/service.coffee',
       'src/coffee/common/common.coffee',
+      'src/coffee/common/upload.coffee',
 
       'src/coffee/site/app.coffee',
       'src/coffee/site/profile.coffee',
       'src/coffee/site/admin.coffee',
+      'src/coffee/site/pretty-file.coffee',
+      'src/coffee/site/resource.coffee',
     ],
   }
