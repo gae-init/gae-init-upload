@@ -1,22 +1,21 @@
 .drop-area {
+  .well;
   display: none;
   text-align: center;
   cursor: default;
-
   &.drag-hover {
     color: @green;
+    border-style: dashed;
     border-color: @green;
-    box-shadow: inset 0 3px 4px #888;
+    .box-shadow(inset 0 3px 4px @grayLight);
   }
 }
-
 
 body {
   &.drag-hover {
     .opacity(50);
   }
 }
-
 
 .resource-uploads {
   .thumbnail {
@@ -26,6 +25,7 @@ body {
       text-align: center;
 
       border-radius: 2px;
+      border: 1px solid #ddd;
       background-repeat: no-repeat;
       background-position: 50% 50%;
       background-size: cover;

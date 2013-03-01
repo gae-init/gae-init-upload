@@ -7,8 +7,12 @@ window.init_resource_view = () ->
 
 window.init_resource_upload = () ->
   if window.File and window.FileList and window.FileReader
-    file_uploader = new FileUploader(upload_handler, $('.file'), $('.drop-area'))
-
+    window.file_uploader = new FileUploader
+        upload_handler: upload_handler
+        selector: $('.file')
+        drop_area: $('.drop-area')
+        confirm_message: 'Files are still being uploaded.'
+        upload_url: $('.file').data('get-upload-url')
 
 upload_handler =
   preview: (file) ->
@@ -25,7 +29,7 @@ upload_handler =
       """
     $preview = $('.preview', $resource)
 
-    if file.type.indexOf("image") is 0
+    if file_uploader.active_files < 16 and file.type.indexOf("image") is 0
       reader = new FileReader()
       reader.onload = (e) =>
         $preview.css('background-image', "url(#{e.target.result})")
@@ -43,6 +47,9 @@ upload_handler =
         if resource
           $('.bar', $resource).addClass('bar-success')
           $('.bar', $resource).text("Success #{size_human(file.size)}")
+          if resource.image_url and $preview.text().length > 0
+            $preview.css('background-image', "url(#{resource.image_url})")
+            $preview.text('')
       else
         $('.bar', $resource).css('width', '100%')
         $('.bar', $resource).addClass('bar-danger')
@@ -65,3 +72,4 @@ window.init_delete_resource_button = () ->
           $("#{target}").remove()
         if redirect_url
           window.location.href = redirect_url
+

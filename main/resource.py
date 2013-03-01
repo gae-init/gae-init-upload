@@ -181,10 +181,8 @@ def resource_delete(resource_id):
 @auth.login_required
 def resource_download(resource_id):
   resource_db = model.Resource.get_by_id(resource_id)
-  data = {
-      'save_as': resource_db.name.encode('utf-8'),
-    }
-  url = '/serve/%s?%s' % (resource_db.blob_key, urllib.urlencode(data))
+  name = urllib.quote(resource_db.name.encode('utf-8'))
+  url = '/serve/%s?save_as=%s' % (resource_db.blob_key, name)
   return flask.redirect(url)
 
 
