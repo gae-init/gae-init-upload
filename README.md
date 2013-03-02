@@ -2,7 +2,7 @@ gae-init-upload
 ===============
 
 **gae-init-upload** is a clone of [gae-init][gaeinit] for
-uploading resources using Google App Engine either using Blobstore or Google
+uploading resources using Google App Engine either on Blobstore or on Google
 Cloud Storage.
 
 
