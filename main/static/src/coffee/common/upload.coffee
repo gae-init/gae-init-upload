@@ -63,7 +63,7 @@
     upload_file: (file, url, progress, callback) =>
       @active_files += 1
       xhr = new XMLHttpRequest()
-      xhr.upload.addEventListener 'progress', (event) ->More
+      xhr.upload.addEventListener 'progress', (event) ->
           progress(parseInt(event.loaded / event.total * 99.0))
         , false
 
