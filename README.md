@@ -1,13 +1,16 @@
-gae-init
-========
+gae-init-upload
+===============
 
-**gae-init** is the easiest way to start new applications on Google App Engine.
+**gae-init-upload** is a clone of [gae-init][gaeinit] for
+uploading resources using Google App Engine either using Blobstore or Google
+Cloud Storage.
 
 
 Demo Page
 ---------
 
-The latest version is always accessible from: [http://gae-init.appspot.com][gaeinit]
+The latest version is always accessible from:
+[http://upload.gae-init.appspot.com][gae-init-upload]
 
 Getting the code
 ----------------
@@ -15,7 +18,7 @@ The easiest way to get the code is to fork it and then clone it.
 
 Or you can clone it directly using the command line:
 
-    $ hg clone https://bitbucket.org/lipis/gae-init project-name
+    $ hg clone https://bitbucket.org/lipis/gae-init-upload project-name
 
 Running the build.py script (first time)
 ----------------------------------------
@@ -89,6 +92,7 @@ Author
 [![Lipis flair on stackoverflow.com][lipisflair]][lipis]
 
 [gaeinit]: http://gae-init.appspot.com
+[gae-init-upload]: http://upload.gae-init.appspot.com
 
 [gae]: https://developers.google.com/appengine/
 [gaepython]: https://developers.google.com/appengine/docs/python/python27/using27
