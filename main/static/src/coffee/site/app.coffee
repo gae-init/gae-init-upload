@@ -1,9 +1,7 @@
 #JS enabled pages
 $ ->
-  LOG('app init')
 
 $ -> $('html.welcome').each ->
-  LOG('init welcome')
 
 $ -> $('html.profile').each ->
   init_profile()
@@ -13,7 +11,6 @@ $ -> $('html.feedback').each ->
 
 $ -> $('html.admin-config').each ->
   init_admin_config()
-
 
 $ -> $('html.resource-list').each ->
   init_resource_list()

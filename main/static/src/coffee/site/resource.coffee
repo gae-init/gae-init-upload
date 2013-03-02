@@ -4,7 +4,6 @@ window.init_resource_list = () ->
 window.init_resource_view = () ->
   init_delete_resource_button()
 
-
 window.init_resource_upload = () ->
   if window.File and window.FileList and window.FileReader
     window.file_uploader = new FileUploader

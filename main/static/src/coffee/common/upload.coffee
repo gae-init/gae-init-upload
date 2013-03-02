@@ -1,36 +1,38 @@
 (->
   class window.FileUploader
-    constructor: (options) ->
+    constructor: (@options) ->
+      @upload_handler = @options.upload_handler
+      @selector = @options.selector
+      @drop_area = @options.drop_area
+      @upload_url = @options.upload_url or "/_s#{window.location.pathname}"
+      @confirm_message = @options.confirm_message or 'Files are still being uploaded.'
+
       @active_files = 0
-      @options =
-        confirm_message: 'Files are still being uploaded.'
-        upload_url: "/_s#{window.location.pathname}"
 
-      for option of options
-        @options[option] = options[option]
-
-      $(@options.selector)?.bind 'change', (e) =>
+      @selector?.bind 'change', (e) =>
         @file_select_handler(e)
 
       xhr = new XMLHttpRequest()
-      if xhr.upload
-        $(@options.drop_area)?.on 'dragover', @file_drag_hover
-        $(@options.drop_area)?.on 'dragleave', @file_drag_hover
-        $(@options.drop_area)?.on 'drop', (e) =>
+      if @drop_area? and xhr.upload
+        @drop_area.on 'dragover', @file_drag_hover
+        @drop_area.on 'dragleave', @file_drag_hover
+        @drop_area.on 'drop', (e) =>
           @file_select_handler(e)
-        $(@options.drop_area)?.show()
+        @drop_area.show()
 
       window.onbeforeunload = () =>
-        if @options?.confirm_message and @active_files > 0
-          return @options.confirm_message
+        if @confirm_message? and @active_files > 0
+          return @confirm_message
 
     file_drag_hover: (e) =>
+      if not @drop_area?
+        return
       e.stopPropagation()
       e.preventDefault()
       if e.type is 'dragover'
-        $(@options.drop_area).addClass('drag-hover')
+        @drop_area.addClass('drag-hover')
       else
-        $(@options.drop_area).removeClass('drag-hover')
+        @drop_area.removeClass('drag-hover')
 
     file_select_handler: (e) =>
       @file_drag_hover(e)
@@ -41,13 +43,13 @@
     upload_files: (files) =>
       @get_upload_urls files.length, (error, urls) =>
         if error
-          LOG 'Error getting URLs', error
+          console.log('Error getting URLs', error)
           return
         @process_files(files, urls, 0)
 
     get_upload_urls: (n, callback) =>
       return if n <= 0
-      service_call 'GET', @options.upload_url, {count:n}, (error, result) ->
+      service_call 'GET', @upload_url, {count:n}, (error, result) ->
         if error
           callback(error)
           throw error
@@ -55,14 +57,13 @@
 
     process_files: (files, urls, i) =>
       return if i >= files.length
-      @upload_file files[i], urls[i].upload_url, @options.upload_handler?.preview(files[i]), =>
-        @process_files files, urls, i + 1, @options.upload_handler?
+      @upload_file files[i], urls[i].upload_url, @upload_handler?.preview(files[i]), () =>
+        @process_files files, urls, i + 1, @upload_handler?
 
     upload_file: (file, url, progress, callback) =>
-      LOG 'file', file
       @active_files += 1
       xhr = new XMLHttpRequest()
-      xhr.upload.addEventListener 'progress', (event) ->
+      xhr.upload.addEventListener 'progress', (event) ->More
           progress(parseInt(event.loaded / event.total * 99.0))
         , false
 

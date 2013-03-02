@@ -9,14 +9,12 @@
 
   <div class="row">
     <div class="span12">
-      <form id="upload" class="form-horizontal " method="POST" action="{{upload_url}}"  enctype='multipart/form-data'>
+      <form id="upload" class="form-horizontal" method="POST" action="{{upload_url}}" enctype='multipart/form-data'>
         <fieldset>
           <div class='control-group'>
             <label class="control-label">Choose Files to Upload</label>
             <div class='controls pretty-file'>
-              <input class="file hide" type="file" name="file[]" multiple="multiple"
-                  data-get-upload-url="{{get_upload_url}}"
-                >
+              <input class="file" name="file[]" data-get-upload-url="{{get_upload_url}}" type="file" multiple="multiple">
               <div class="input-append">
                 <input class="input-large" type="text">
                 <a href="#" class="btn">Browse</a>

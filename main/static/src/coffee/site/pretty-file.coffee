@@ -3,6 +3,7 @@ if $(".pretty-file").length
   $(".pretty-file").each () ->
     pretty_file = $(this)
     file_input = pretty_file.find('input[type="file"]')
+    file_input.hide()
     file_input.change () ->
       files = file_input[0].files
       info = ""
