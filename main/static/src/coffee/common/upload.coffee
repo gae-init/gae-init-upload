@@ -6,6 +6,8 @@
       @drop_area = @options.drop_area
       @upload_url = @options.upload_url or "/_s#{window.location.pathname}"
       @confirm_message = @options.confirm_message or 'Files are still being uploaded.'
+      @allowed_types = @options.allowed_types
+      @max_size = @options.max_size
 
       @active_files = 0
 
@@ -61,8 +63,21 @@
         @process_files files, urls, i + 1, @upload_handler?
 
     upload_file: (file, url, progress, callback) =>
-      @active_files += 1
       xhr = new XMLHttpRequest()
+      if @allowed_types?.length > 0
+        if file.type not in @allowed_types
+          progress(0, undefined, 'wrong_type')
+          callback()
+          return
+
+      if @max_size?
+        if file.size > @max_size
+          progress(0, undefined, 'too_big')
+          callback()
+          return
+
+      @active_files += 1
+
       xhr.upload.addEventListener 'progress', (event) ->
           progress(parseInt(event.loaded / event.total * 99.0))
         , false
@@ -72,7 +87,7 @@
         progress(100.0, response.result)
         @active_files -= 1
       xhr.onerror = () =>
-        progress(-1)
+        progress(0, undefined, 'error')
         @active_files -= 1
 
       xhr.open('POST', url, true)

@@ -17,9 +17,16 @@ body {
   }
 }
 
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .resource-uploads {
   .thumbnail {
     .preview {
+      .ellipsis;
       height: 80px;
       line-height: 80px;
       text-align: center;
@@ -32,9 +39,7 @@ body {
       background-color: @wellBackground;
     }
     h5 {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      .ellipsis;
     }
   }
   .progress {
@@ -42,8 +47,7 @@ body {
     .bar {
       white-space: nowrap;
       padding: 0 4px;
-      @color: rgba(0, 0, 0, .5);
-      text-shadow: 0 -1px 0 @color, 0 1px 0 @color, -1px 0 0 @color, 1px 0 0 @color;
+      text-shadow: 0 0 2px @black, 0 0 8px @black;
     }
   }
 }

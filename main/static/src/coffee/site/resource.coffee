@@ -7,11 +7,13 @@ window.init_resource_view = () ->
 window.init_resource_upload = () ->
   if window.File and window.FileList and window.FileReader
     window.file_uploader = new FileUploader
-        upload_handler: upload_handler
-        selector: $('.file')
-        drop_area: $('.drop-area')
-        confirm_message: 'Files are still being uploaded.'
-        upload_url: $('.file').data('get-upload-url')
+      upload_handler: upload_handler
+      selector: $('.file')
+      drop_area: $('.drop-area')
+      confirm_message: 'Files are still being uploaded.'
+      upload_url: $('.file').data('get-upload-url')
+      max_size: 1024 * 1024 * 1024
+      allowed_types: []
 
 upload_handler =
   preview: (file) ->
@@ -38,8 +40,8 @@ upload_handler =
 
     $('.resource-uploads').prepend($resource)
 
-    (progress, resource) =>
-      if progress >=0
+    (progress, resource, error) =>
+      if error == undefined
         $('.bar', $resource).css
           width: "#{progress}%"
         $('.bar', $resource).text("#{progress}% of #{size_human(file.size)}")
@@ -52,7 +54,12 @@ upload_handler =
       else
         $('.bar', $resource).css('width', '100%')
         $('.bar', $resource).addClass('bar-danger')
-        $('.bar', $resource).text('Failed')
+        if error == 'too_big'
+          $('.bar', $resource).text("Failed! Too big, max: #{size_human(file_uploader.max_size)}.")
+        else if error == 'wrong_type'
+          $('.bar', $resource).text("Failed! Wrong file type.")
+        else
+          $('.bar', $resource).text('Failed!')
 
 
 window.init_delete_resource_button = () ->
