@@ -12,8 +12,8 @@ window.init_resource_upload = () ->
       drop_area: $('.drop-area')
       confirm_message: 'Files are still being uploaded.'
       upload_url: $('.file').data('get-upload-url')
-      max_size: 1024 * 1024 * 1024
       allowed_types: []
+      max_size: 1024 * 1024 * 1024
 
 upload_handler =
   preview: (file) ->
