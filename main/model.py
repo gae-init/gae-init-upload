@@ -55,12 +55,14 @@ class Resource(Base, modelx.ResourceX):
   user_key = ndb.KeyProperty(kind=User, required=True)
   blob_key = ndb.BlobKeyProperty(required=True)
   name = ndb.StringProperty(required=True)
+  bucket_name = ndb.StringProperty()
   image_url = ndb.StringProperty(default='')
   content_type = ndb.StringProperty(default='')
   size = ndb.IntegerProperty(default=0)
 
   _PROPERTIES = Base._PROPERTIES.union(set([
       'name',
+      'bucket_name',
       'image_url',
       'content_type',
       'size',

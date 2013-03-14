@@ -212,6 +212,7 @@ def resource_db_from_upload():
       content_type=blob_info.content_type,
       size=blob_info.size,
       image_url=image_url,
+      bucket_name=config.CONFIG_DB.bucket_name or None,
     )
   resource_db.put()
   return resource_db
