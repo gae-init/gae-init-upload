@@ -19,11 +19,7 @@
               <a href="{{url_for('resource_list')}}"><i class="icon-th-list"></i> Resource List</a>
             </li>
           # endif
-          # if config.CONFIG_DB.feedback_email
-            <li class="{% if html_class == 'feedback' %} active {% endif %}">
-              <a href="{{url_for('feedback')}}"><i class="icon-comment"></i> Feedback</a>
-            </li>
-          # endif
+          # include 'bit/contact_menu.html'
         </ul>
         <ul class="nav pull-right">
           # include 'bit/user_menu.html'
