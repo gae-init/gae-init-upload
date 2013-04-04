@@ -12,6 +12,12 @@ Demo Page
 The latest version is always accessible from:
 [http://upload.gae-init.appspot.com][gae-init-upload]
 
+Documentation
+-------------
+
+Visit the [docs][] page for more information, where you can
+also find a detailed [tutorial][] on how to build a phonebook application.
+
 Getting the code
 ----------------
 The easiest way to get the code is to fork it and then clone it.
@@ -24,7 +30,6 @@ Running the build.py script (first time)
 ----------------------------------------
 
     $ cd /path/to/project-name/main
-    $ npm install
     $ ./build.py -c
     $ dev_appserver.py .
 
@@ -94,6 +99,8 @@ Author
 [gaeinit]: http://gae-init.appspot.com
 [gae-init-upload]: http://upload.gae-init.appspot.com
 
+[docs]: http://docs.gae-init.appspot.com
+[tutorial]: http://docs.gae-init.appspot.com/tutorial/
 [gae]: https://developers.google.com/appengine/
 [gaepython]: https://developers.google.com/appengine/docs/python/python27/using27
 [ndb]: https://developers.google.com/appengine/docs/python/ndb/

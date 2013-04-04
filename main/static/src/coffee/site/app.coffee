@@ -1,4 +1,3 @@
-#JS enabled pages
 $ ->
 
 $ -> $('html.welcome').each ->
