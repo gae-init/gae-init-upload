@@ -1,7 +1,7 @@
 gae-init-upload
 ===============
 
-**gae-init-upload** is a clone of [gae-init][gaeinit] for
+**gae-init-upload** is a clone of [gae-init][] for
 uploading resources using Google App Engine either on Blobstore or on Google
 Cloud Storage.
 
@@ -21,10 +21,6 @@ also find a detailed [tutorial][] on how to build a phonebook application.
 Getting the code
 ----------------
 The easiest way to get the code is to fork it and then clone it.
-
-Or you can clone it directly using the command line:
-
-    $ hg clone https://bitbucket.org/lipis/gae-init-upload project-name
 
 Running the build.py script (first time)
 ----------------------------------------
@@ -90,13 +86,14 @@ Contributions and Ideas
   - [ksymeon][]
   - [gmist][]
   - [stefanlindmark][]
+  - [joernhees][]
 
 Author
 ------
 
 [![Lipis flair on stackoverflow.com][lipisflair]][lipis]
 
-[gaeinit]: http://gae-init.appspot.com
+[gae-init]: http://gae-init.appspot.com
 [gae-init-upload]: http://upload.gae-init.appspot.com
 
 [docs]: http://docs.gae-init.appspot.com
@@ -125,6 +122,7 @@ Author
 [ksymeon]: https://plus.google.com/102598378133436784997
 [gmist]: https://github.com/gmist
 [stefanlindmark]: http://www.linkedin.com/in/stefanlindmark
+[joernhees]: https://github.com/joernhees
 
 [lipisflair]: http://stackexchange.com/users/flair/5282.png
 [lipis]: http://stackoverflow.com/users/8418/lipis
