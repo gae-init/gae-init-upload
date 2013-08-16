@@ -41,17 +41,7 @@ upload_handler =
     $('.resource-uploads').prepend($resource)
 
     (progress, resource, error) =>
-      if error == undefined
-        $('.bar', $resource).css
-          width: "#{progress}%"
-        $('.bar', $resource).text("#{progress}% of #{size_human(file.size)}")
-        if resource
-          $('.bar', $resource).addClass('bar-success')
-          $('.bar', $resource).text("Success #{size_human(file.size)}")
-          if resource.image_url and $preview.text().length > 0
-            $preview.css('background-image', "url(#{resource.image_url})")
-            $preview.text('')
-      else
+      if error
         $('.bar', $resource).css('width', '100%')
         $('.bar', $resource).addClass('bar-danger')
         if error == 'too_big'
@@ -60,6 +50,20 @@ upload_handler =
           $('.bar', $resource).text("Failed! Wrong file type.")
         else
           $('.bar', $resource).text('Failed!')
+        return
+
+      if progress == 100.0 and resource
+        $('.bar', $resource).addClass('bar-success')
+        $('.bar', $resource).text("Success #{size_human(file.size)}")
+        if resource.image_url and $preview.text().length > 0
+          $preview.css('background-image', "url(#{resource.image_url})")
+          $preview.text('')
+      else if progress == 100.0
+        $('.bar', $resource).css('width', '100%')
+        $('.bar', $resource).text("100% - Processing..")
+      else
+        $('.bar', $resource).css('width', "#{progress}%")
+        $('.bar', $resource).text("#{progress}% of #{size_human(file.size)}")
 
 
 window.init_delete_resource_button = () ->
