@@ -160,7 +160,7 @@ def resource_update(resource_id):
 ################################################################################
 # Delete
 ################################################################################
-@app.route('/_s/resource/<int:resource_id>/delete/', methods=['GET', 'POST'])
+@app.route('/_s/resource/<int:resource_id>/delete/', methods=['POST'])
 @auth.login_required
 def resource_delete(resource_id):
   resource_db = model.Resource.get_by_id(resource_id)
