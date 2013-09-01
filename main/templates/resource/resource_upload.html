@@ -7,46 +7,36 @@
     </h1>
   </div>
 
-  <div class="row">
-    <div class="span12">
-      <form id="upload" class="form-horizontal" method="POST" action="{{upload_url}}" enctype='multipart/form-data'>
-        <fieldset>
-          <div class='control-group'>
-            <label class="control-label">Choose Files to Upload</label>
-            <div class='controls pretty-file'>
-              <input class="file" name="file[]" data-get-upload-url="{{get_upload_url}}" type="file" multiple="multiple">
-              <div class="input-append">
-                <input class="input-large" type="text">
-                <a href="#" class="btn">Browse</a>
-              </div>
-            </div>
+  <form id="upload" class="form-horizontal" method="POST" action="{{upload_url}}" enctype='multipart/form-data'>
+    <fieldset>
+      <div class='control-group pretty-file'>
+        <div class='controls'>
+          <input class="file" name="file[]" data-get-upload-url="{{get_upload_url}}" type="file" multiple="multiple">
+          <div class="input-group">
+            <span class="input-group-addon">Choose Files</span>
+            <input type="text" class="form-control">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button">Browse</button>
+            </span>
           </div>
-        </fieldset>
-      </form>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span12">
-      <div class="drop-area">
-        drop files here
+        </div>
       </div>
-    </div>
+    </fieldset>
+  </form>
+  <hr>
+  <div class="drop-area">
+    drop files here
   </div>
-
-  <div class="row">
-    <div class="span12">
-      <ul class="thumbnails resource-uploads">
-        <li class="span3 hide">
-          <div class="thumbnail">
-            <div class="preview" style="background-image: url(http://i.stack.imgur.com/oJKoh.png)"></div>
-            <h5>Example preview!</h5>
-            <div class="progress">
-              <div class="bar" style="width: 10%;">Hello word</div>
-            </div>
-          </div>
-        </li>
-      </ul>
+  <div class="row resource-uploads">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 hide">
+      <div class="thumbnail">
+        <div class="preview" style="background-image: url(http://files.vladstudio.com/joy/alien_and_chameleon/wall/vladstudio_alien_and_chameleon_480x272_signed.jpg)"></div>
+        <h5>Example preview!</h5>
+        <div class="progress">
+          <div class="progress-bar" style="width: 64%;"></div>
+          <div class="progress-text">Hola amigo</div>
+        </div>
+      </div>
     </div>
   </div>
 # endblock

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import flask
 from flaskext import wtf
 
@@ -10,40 +12,28 @@ from main import app
 
 
 class ConfigUpdateForm(wtf.Form):
-  analytics_id = wtf.TextField(
-      'Analytics ID', [wtf.validators.optional()]
-    )
-  brand_name = wtf.TextField(
-      'Brand Name', [wtf.validators.required()]
-    )
-  bucket_name = wtf.TextField(
-      'Bucket Name', [wtf.validators.optional()]
-    )
-  facebook_app_id = wtf.TextField(
-      'Facebook App ID', [wtf.validators.optional()]
-    )
-  facebook_app_secret = wtf.TextField(
-      'Facebook App Secret', [wtf.validators.optional()]
-    )
+  analytics_id = wtf.TextField('Analytics ID')
+  announcement_html = wtf.TextAreaField('Announcement HTML')
+  announcement_type = wtf.SelectField('Announcement Type', choices=[
+      (t, t.title()) for t in model.Config.announcement_type._choices
+    ])
+  brand_name = wtf.TextField('Brand Name', [wtf.validators.required()])
+  bucket_name = wtf.TextField('Bucket Name')
+  facebook_app_id = wtf.TextField('Facebook App ID')
+  facebook_app_secret = wtf.TextField('Facebook App Secret')
   feedback_email = wtf.TextField('Feedback Email', [
-        wtf.validators.optional(),
-        wtf.validators.email('That does not look like an email'),
-      ])
-  twitter_consumer_key = wtf.TextField(
-      'Twitter Consumer Key', [wtf.validators.optional()]
-    )
-  twitter_consumer_secret = wtf.TextField(
-      'Twitter Consumer Secret', [wtf.validators.optional()]
-    )
-  flask_secret_key = wtf.TextField(
-      'Flask Secret Key', [wtf.validators.required()]
-    )
+      wtf.validators.optional(),
+      wtf.validators.email('That does not look like an email')
+    ])
+  flask_secret_key = wtf.TextField('Flask Secret Key', [
+      wtf.validators.required()
+    ])
+  twitter_consumer_key = wtf.TextField('Twitter Consumer Key')
+  twitter_consumer_secret = wtf.TextField('Twitter Consumer Secret')
 
 
 @app.route('/_s/admin/config/', endpoint='admin_config_update_service')
-@app.route(
-    '/admin/config/', methods=['GET', 'POST'], endpoint='admin_config_update',
-  )
+@app.route('/admin/config/', methods=['GET', 'POST'])
 @auth.admin_required
 def admin_config_update():
   form = ConfigUpdateForm()
@@ -51,6 +41,8 @@ def admin_config_update():
   config_db = model.Config.get_master_db()
   if form.validate_on_submit():
     config_db.analytics_id = form.analytics_id.data.strip()
+    config_db.announcement_html = form.announcement_html.data.strip()
+    config_db.announcement_type = form.announcement_type.data.strip()
     config_db.brand_name = form.brand_name.data.strip()
     config_db.bucket_name = form.bucket_name.data.strip()
     config_db.facebook_app_id = form.facebook_app_id.data.strip()
@@ -62,10 +54,11 @@ def admin_config_update():
     config_db.put()
     reload(config)
     app.config.update(CONFIG_DB=config_db)
-    flask.flash('Your config settings have been saved', category='success')
     return flask.redirect(flask.url_for('welcome'))
   if not form.errors:
     form.analytics_id.data = config_db.analytics_id
+    form.announcement_html.data = config_db.announcement_html
+    form.announcement_type.data = config_db.announcement_type
     form.brand_name.data = config_db.brand_name
     form.bucket_name.data = config_db.bucket_name
     form.facebook_app_id.data = config_db.facebook_app_id

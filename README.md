@@ -10,7 +10,7 @@ Demo Page
 ---------
 
 The latest version is always accessible from:
-[http://upload.gae-init.appspot.com][gae-init-upload]
+[http://upload.gae-init.appspot.com](http://upload.gae-init.appspot.com)
 
 Documentation
 -------------
@@ -18,48 +18,41 @@ Documentation
 Visit the [docs][] page for more information, where you can
 also find a detailed [tutorial][] on how to build a phonebook application.
 
-Getting the code
-----------------
-The easiest way to get the code is to fork it and then clone it.
-
-Running the build.py script (first time)
-----------------------------------------
-
-    $ cd /path/to/project-name/main
-    $ ./build.py -c
-    $ dev_appserver.py .
-
-To test it visit `http://localhost:8080/` in your browser.
-
 Running the Development Environment
 -----------------------------------
 
-To watch for changes of your `*.less` and `*.coffee` files and compile them
-automatically to `*.css` and `*.js` respectively:
-
     $ cd /path/to/project-name/main
-    $ ./build.py -w
-
-To run the actual server (in another bash):
-
-    $ dev_appserver.py /path/to/project-name/main
+    $ ./run.py -s
 
 To test it visit `http://localhost:8080/` in your browser.
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+To watch for changes of your `*.less` & `*.coffee` files and compile them
+automatically to `*.css` & `*.js` run in another bash:
+
+    $ ./run.py -w
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+For a complete list of commands:
+
+    $ ./run -h
 
 Deploying on Google App Engine
 ------------------------------
 
-Before deploying make sure that the `app.yaml` and `config.py` are up to date.
+Before deploying make sure that the `app.yaml` and `config.py` are up to date
+and you ran the `run.py` script to minify all the static files:
 
-    $ cd /path/to/project/main
-    $ ./build.py -m
+    $ ./run.py -m
     $ appcfg.py update .
 
 Tech Stack
 ----------
 
-  - [Google App Engine][gae]
-  - [Python 2.7][gaepython]
+  - [Google App Engine][]
+  - [Python 2.7][]
   - [NDB][]
   - [Jinja2][]
   - [Flask][]
@@ -67,16 +60,15 @@ Tech Stack
   - [CoffeeScript][]
   - [LessCSS][]
   - [Bootstrap][]
-  - [Font Awesome][fontawesome]
+  - [Font Awesome][]
+  - [NProgress][]
 
 Requirements
 ------------
 
-  - [Google App Engine SDK for Python][gaesdk]
-  - [node.js][nodejs]
+  - [Google App Engine SDK for Python][]
+  - [node.js][]
   - [OSX][] or [Linux][] or [Windows][]
-  - [Mercurial][]
-  - [Sublime][] (If you are a developer, you need that)
 
 Contributions and Ideas
 -----------------------
@@ -93,36 +85,30 @@ Author
 
 [![Lipis flair on stackoverflow.com][lipisflair]][lipis]
 
-[gae-init]: http://gae-init.appspot.com
-[gae-init-upload]: http://upload.gae-init.appspot.com
-
-[docs]: http://docs.gae-init.appspot.com
-[tutorial]: http://docs.gae-init.appspot.com/tutorial/
-[gae]: https://developers.google.com/appengine/
-[gaepython]: https://developers.google.com/appengine/docs/python/python27/using27
-[ndb]: https://developers.google.com/appengine/docs/python/ndb/
-[jinja2]: http://jinja.pocoo.org/docs/
-[flask]: http://flask.pocoo.org/
-[jquery]: http://jquery.com/
-[coffeescript]: http://coffeescript.org/
-[lesscss]: http://lesscss.org/
-[bootstrap]: http://twitter.github.com/bootstrap/
-[fontawesome]: http://fortawesome.github.com/Font-Awesome/
-
-[gaesdk]: https://developers.google.com/appengine/downloads
-[nodejs]: http://nodejs.org/
-[osx]: http://www.apple.com/osx/
-[linux]: http://www.ubuntu.com
-[windows]: http://windows.microsoft.com/
-[mercurial]: http://mercurial.selenic.com/
-[sublime]: http://www.sublimetext.com/
-
-[tzador]: http://stackoverflow.com/users/165697/tzador
+[bootstrap]: http://getbootstrap.com/
 [chris]: http://stackoverflow.com/users/226394/chris-top
-[ksymeon]: https://plus.google.com/102598378133436784997
+[coffeescript]: http://coffeescript.org/
+[docs]: http://docs.gae-init.appspot.com
+[flask]: http://flask.pocoo.org/
+[font awesome]: http://fortawesome.github.com/font-awesome/
+[gae-init]: http://gae-init.appspot.com
 [gmist]: https://github.com/gmist
-[stefanlindmark]: http://www.linkedin.com/in/stefanlindmark
+[google app engine sdk for python]: https://developers.google.com/appengine/downloads
+[google app engine]: https://developers.google.com/appengine/
+[jinja2]: http://jinja.pocoo.org/docs/
 [joernhees]: https://github.com/joernhees
-
-[lipisflair]: http://stackexchange.com/users/flair/5282.png
+[jquery]: http://jquery.com/
+[ksymeon]: https://plus.google.com/102598378133436784997
+[lesscss]: http://lesscss.org/
+[linux]: http://www.ubuntu.com
 [lipis]: http://stackoverflow.com/users/8418/lipis
+[lipisflair]: http://stackexchange.com/users/flair/5282.png
+[ndb]: https://developers.google.com/appengine/docs/python/ndb/
+[node.js]: http://nodejs.org/
+[nprogress]: http://ricostacruz.com/nprogress/
+[osx]: http://www.apple.com/osx/
+[python 2.7]: https://developers.google.com/appengine/docs/python/python27/using27
+[stefanlindmark]: http://www.linkedin.com/in/stefanlindmark
+[tutorial]: http://docs.gae-init.appspot.com/tutorial/
+[tzador]: http://stackoverflow.com/users/165697/tzador
+[windows]: http://windows.microsoft.com/

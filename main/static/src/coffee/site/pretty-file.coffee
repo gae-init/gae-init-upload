@@ -12,7 +12,8 @@ if $(".pretty-file").length
       else
         path = file_input.val().split("\\")
         info = path[path.length - 1]
-      pretty_file.find(".input-append input").val(info)
-    pretty_file.find(".input-append").click (e) ->
+      pretty_file.find(".input-group input").val(info)
+    pretty_file.find(".input-group").click (e) ->
       e.preventDefault()
       file_input.click()
+      $(this).blur()

@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from google.appengine.ext import ndb
 from uuid import uuid4
 import os
@@ -23,7 +25,11 @@ class Base(ndb.Model, modelx.BaseX):
 
 class Config(Base, modelx.ConfigX):
   analytics_id = ndb.StringProperty(default='')
-  brand_name = ndb.StringProperty(default='gae-init-upload')
+  announcement_html = ndb.StringProperty(default='')
+  announcement_type = ndb.StringProperty(default='info', choices=[
+      'info', 'warning', 'success', 'danger',
+    ])
+  brand_name = ndb.StringProperty(default='gae-init')
   bucket_name = ndb.StringProperty(default='')
   facebook_app_id = ndb.StringProperty(default='')
   facebook_app_secret = ndb.StringProperty(default='')
@@ -31,8 +37,11 @@ class Config(Base, modelx.ConfigX):
   flask_secret_key = ndb.StringProperty(default=str(uuid4()).replace('-', ''))
   twitter_consumer_key = ndb.StringProperty(default='')
   twitter_consumer_secret = ndb.StringProperty(default='')
+
   _PROPERTIES = Base._PROPERTIES.union(set([
       'analytics_id',
+      'announcement_html',
+      'announcement_type',
       'brand_name',
       'bucket_name',
       'facebook_app_id',
@@ -66,11 +75,11 @@ class User(Base, modelx.UserX):
 class Resource(Base, modelx.ResourceX):
   user_key = ndb.KeyProperty(kind=User, required=True)
   blob_key = ndb.BlobKeyProperty(required=True)
-  name = ndb.StringProperty(required=True)
+  name = ndb.StringProperty(indexed=True, required=True)
   bucket_name = ndb.StringProperty()
   image_url = ndb.StringProperty(default='')
-  content_type = ndb.StringProperty(default='')
-  size = ndb.IntegerProperty(default=0)
+  content_type = ndb.StringProperty(indexed=True, default='')
+  size = ndb.IntegerProperty(indexed=True, default=0)
 
   _PROPERTIES = Base._PROPERTIES.union(set([
       'name',

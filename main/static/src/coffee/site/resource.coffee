@@ -18,15 +18,16 @@ window.init_resource_upload = () ->
 upload_handler =
   preview: (file) ->
     $resource = $ """
-        <li class="span3">
+        <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6">
           <div class="thumbnail">
             <div class="preview"></div>
             <h5>#{file.name}</h5>
             <div class="progress">
-              <div class="bar" style="width: 0%;"></div>
+              <div class="progress-bar" style="width: 0%;"></div>
+              <div class="progress-text"></div>
             </div>
           </div>
-        </li>
+        </div>
       """
     $preview = $('.preview', $resource)
 
@@ -42,28 +43,28 @@ upload_handler =
 
     (progress, resource, error) =>
       if error
-        $('.bar', $resource).css('width', '100%')
-        $('.bar', $resource).addClass('bar-danger')
+        $('.progress-bar', $resource).css('width', '100%')
+        $('.progress-bar', $resource).addClass('bar-danger')
         if error == 'too_big'
-          $('.bar', $resource).text("Failed! Too big, max: #{size_human(file_uploader.max_size)}.")
+          $('.progress-text', $resource).text("Failed! Too big, max: #{size_human(file_uploader.max_size)}.")
         else if error == 'wrong_type'
-          $('.bar', $resource).text("Failed! Wrong file type.")
+          $('.progress-text', $resource).text("Failed! Wrong file type.")
         else
-          $('.bar', $resource).text('Failed!')
+          $('.progress-text', $resource).text('Failed!')
         return
 
       if progress == 100.0 and resource
-        $('.bar', $resource).addClass('bar-success')
-        $('.bar', $resource).text("Success #{size_human(file.size)}")
+        $('.progress-bar', $resource).addClass('bar-success')
+        $('.progress-text', $resource).text("Success #{size_human(file.size)}")
         if resource.image_url and $preview.text().length > 0
           $preview.css('background-image', "url(#{resource.image_url})")
           $preview.text('')
       else if progress == 100.0
-        $('.bar', $resource).css('width', '100%')
-        $('.bar', $resource).text("100% - Processing..")
+        $('.progress-bar', $resource).css('width', '100%')
+        $('.progress-text', $resource).text("100% - Processing..")
       else
-        $('.bar', $resource).css('width', "#{progress}%")
-        $('.bar', $resource).text("#{progress}% of #{size_human(file.size)}")
+        $('.progress-bar', $resource).css('width', "#{progress}%")
+        $('.progress-text', $resource).text("#{progress}% of #{size_human(file.size)}")
 
 
 window.init_delete_resource_button = () ->
