@@ -1,4 +1,5 @@
 $ ->
+  init_time()
 
 $ -> $('html.welcome').each ->
 
