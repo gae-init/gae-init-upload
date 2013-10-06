@@ -1,22 +1,22 @@
 $ ->
-  init_time()
+  init_common()
 
-$ -> $('html.welcome').each ->
+$ -> ($ 'html.welcome').each ->
+  LOG('init welcome')
 
-$ -> $('html.profile').each ->
+$ -> ($ 'html.profile').each ->
   init_profile()
 
-$ -> $('html.feedback').each ->
-  init_loading_button()
+$ -> ($ 'html.feedback').each ->
 
-$ -> $('html.admin-config').each ->
+$ -> ($ 'html.admin-config').each ->
   init_admin_config()
 
-$ -> $('html.resource-list').each ->
+$ -> ($ 'html.resource-list').each ->
   init_resource_list()
 
-$ -> $('html.resource-view').each ->
+$ -> ($ 'html.resource-view').each ->
   init_resource_view()
 
-$ -> $('html.resource-upload').each ->
+$ -> ($ 'html.resource-upload').each ->
   init_resource_upload()

@@ -39,6 +39,12 @@ For a complete list of commands:
 
     $ ./run -h
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+[Grunt][] is used only for watching for changes and live reloading the page:
+
+    $ grunt
+
 Deploying on Google App Engine
 ------------------------------
 
@@ -46,7 +52,7 @@ Before deploying make sure that the `app.yaml` and `config.py` are up to date
 and you ran the `run.py` script to minify all the static files:
 
     $ ./run.py -m
-    $ appcfg.py update .
+    $ appcfg.py update main
 
 Tech Stack
 ----------
@@ -96,6 +102,7 @@ Author
 [gmist]: https://github.com/gmist
 [google app engine sdk for python]: https://developers.google.com/appengine/downloads
 [google app engine]: https://developers.google.com/appengine/
+[grunt]: http://gruntjs.com/
 [jinja2]: http://jinja.pocoo.org/docs/
 [joernhees]: https://github.com/joernhees
 [jquery]: http://jquery.com/

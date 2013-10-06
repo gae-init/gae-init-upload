@@ -46,5 +46,4 @@ skip_files:
 - ^(.*/)?Icon\r
 - ^lib/.*
 - ^static/src/.*
-- ^static/lib/.*
 - ^static/dst/.*

@@ -27,7 +27,11 @@
             </a>
           </td>
           <td class="hidden-xs">{{resource_db.content_type}}</td>
-          <td class="hidden-xs">{{resource_db.created_utc}}</td>
+          <td class="hidden-xs">
+            <time datetime="{{resource_db.created.isoformat()}}">
+              {{resource_db.created.strftime('%Y-%m-%d')}}
+            </time>
+          </td>
           <td class="text-right">
             {{resource_db.size_human}}
           </td>
