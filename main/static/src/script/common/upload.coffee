@@ -79,8 +79,8 @@
       @active_files += 1
 
       xhr.upload.addEventListener 'progress', (event) ->
-          progress(parseInt(event.loaded / event.total * 100.0))
-        , false
+        progress(parseInt(event.loaded / event.total * 100.0))
+
 
       xhr.onload = (event) =>
         response = JSON.parse(event.currentTarget.response)
