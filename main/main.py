@@ -74,6 +74,7 @@ def profile():
       html_class='profile',
       form=form,
       user_db=user_db,
+      has_json=True,
     )
 
 
@@ -148,6 +149,7 @@ def user_list():
       title='User List',
       user_dbs=user_dbs,
       more_url=util.generate_more_url(more_cursor),
+      has_json=True,
     )
 
 
