@@ -178,7 +178,7 @@ def generate_more_url(more_cursor, base_url=None, cursor_name='cursor'):
 def uuid():
   ''' Generates universal unique identifier
   '''
-  return str(uuid4()).replace('-', '')
+  return uuid4().hex
 
 
 def size_human(nbytes):
