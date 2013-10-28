@@ -26,19 +26,19 @@
           </div>
 
           <a class="btn btn-success btn-block" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
-            <i class="icon-cloud-download"></i> Download
+            <i class="fa fa-cloud-download"></i> Download
           </a>
           <a class="btn btn-primary btn-block" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
-            <i class="icon-edit"></i> Update
+            <i class="fa fa-edit"></i> Update
           </a>
           <button class="btn btn-danger btn-block btn-delete"
               data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
               data-redirect-url="{{url_for('resource_list')}}"
             >
-            <i class="icon-trash"></i> Delete
+            <i class="fa fa-trash-o"></i> Delete
           </button>
           <a class="btn btn-info btn-block" href="{{url_for('resource_list')}}">
-            <i class="icon-th-list"></i> View All
+            <i class="fa fa-th-list"></i> View All
           </a>
         </fieldset>
       </form>

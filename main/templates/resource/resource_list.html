@@ -28,7 +28,7 @@
           </td>
           <td class="hidden-xs">{{resource_db.content_type}}</td>
           <td class="hidden-xs">
-            <time datetime="{{resource_db.created.isoformat()}}">
+            <time datetime="{{resource_db.created.__str__()[:-3]}}">
               {{resource_db.created.strftime('%Y-%m-%d')}}
             </time>
           </td>
@@ -37,16 +37,16 @@
           </td>
           <td nowrap>
             <a class="btn btn-xs btn-primary" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
-              <i class="icon-edit"></i>
+              <i class="fa fa-edit"></i>
             </a>
             <a class="btn btn-xs btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
-              <i class="icon-cloud-download"></i>
+              <i class="fa fa-cloud-download"></i>
             </a>
             <button class="btn btn-xs btn-danger btn-delete"
                 data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
                 data-target="#{{resource_db.key.urlsafe()}}"
               >
-              <i class="icon-trash"></i>
+              <i class="fa fa-trash-o"></i>
             </button>
           </td>
         </tr>
