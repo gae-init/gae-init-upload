@@ -54,14 +54,14 @@
             <th class="col-xs-3 hidden-xs">{{utils.order_link('Email', 'user_list', 'email')}}</th>
             <th class="col-xs-2">{{utils.order_link('Created', 'user_list', 'created')}}</th>
             <th class="col-xs-2 hidden-sm hidden-xs">{{utils.order_link('Modified', 'user_list', 'modified')}}</th>
-            <th class="hidden-sm hidden-xs">Auth</th>
+            <th class="hidden-sm hidden-xs">Accounts</th>
           </tr>
         </thead>
         <tbody>
           # for user_db in user_dbs
             <tr>
               <td>
-                <img src="{{user_db.avatar_url}}&amp;s=36" width="18" alt="Gravatar for {{user_db.name}}">
+                <img src="{{user_db.avatar_url_size(36)}}" width="18" alt="Avatar of {{user_db.name}}">
                 {{user_db.name}}
                 # if user_db.admin
                   <i class="fa fa-cog" title="Administrator"></i>

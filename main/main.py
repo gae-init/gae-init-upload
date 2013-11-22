@@ -49,7 +49,7 @@ class ProfileUpdateForm(wtf.Form):
     )
   email = wtf.TextField('Email',
       [wtf.validators.optional(), wtf.validators.email()],
-      filters=[util.strip_filter],
+      filters=[util.email_filter],
     )
 
 
@@ -167,10 +167,9 @@ def user_list():
 def error_handler(e):
   try:
     e.code
-  except:
-    class e(object):
-      code = 500
-      name = 'Internal Server Error'
+  except AttributeError as e:
+    e.code = 500
+    e.name = 'Internal Server Error'
 
   if flask.request.path.startswith('/_s/'):
     return util.jsonpify({
