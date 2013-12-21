@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from google.appengine.ext import blobstore
-from google.appengine.api import images
-
 import urllib
 
+from flask.ext import wtf
+from google.appengine.api import images
+from google.appengine.ext import blobstore
 import flask
-from flaskext import wtf
 import werkzeug
 
+import auth
+import config
 import model
 import util
-import config
-import auth
 
 from main import app
 

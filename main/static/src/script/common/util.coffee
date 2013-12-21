@@ -12,7 +12,7 @@ window.init_loading_button = ->
     ($ this).button 'loading'
 
 
-window.init_time = () ->
+window.init_time = ->
   if ($ 'time').length > 0
     recalculate = ->
       ($ 'time[datetime]').each ->
@@ -23,11 +23,24 @@ window.init_time = () ->
         else
           ($ this).text date.fromNow()
         ($ this).attr 'title', date.local().format 'dddd, MMMM Do YYYY, HH:mm:ss Z'
-
+      setTimeout arguments.callee, 1000 * 45
     recalculate()
-    setInterval ->
-        recalculate()
-      , 1000 * 60
+
+
+window.clear_notifications = ->
+  ($ '#notifications').empty()
+
+
+window.show_notification = (message, category='warning') ->
+  clear_notifications()
+  return if not message
+
+  ($ '#notifications').append """
+      <div class="alert alert-dismissable alert-#{category}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        #{message}
+      </div>
+    """
 
 
 window.size_human = (nbytes) ->
@@ -37,3 +50,4 @@ window.size_human = (nbytes) ->
         return "#{nbytes} #{suffix}"
       return "#{parseInt(nbytes * 10) / 10} #{suffix}"
     nbytes /= 1024.0
+

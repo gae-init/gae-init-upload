@@ -1,25 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from google.appengine.ext import ndb
-from google.appengine.api import users
-
 import functools
 import re
 
+from flask.ext import login
+from flask.ext import oauth
+from google.appengine.api import users
+from google.appengine.ext import ndb
 import flask
-from flaskext import login
-from flaskext import oauth
 
-import util
-import model
 import config
+import model
+import util
 
 from main import app
 
 
-################################################################################
-# Flaskext Login
-################################################################################
+###############################################################################
+# Flask Login
+###############################################################################
 login_manager = login.LoginManager()
 
 
@@ -85,9 +84,9 @@ def is_logged_in():
   return login.current_user.id != 0
 
 
-################################################################################
+###############################################################################
 # Decorators
-################################################################################
+###############################################################################
 def login_required(f):
   @functools.wraps(f)
   def decorated_function(*args, **kws):
@@ -112,9 +111,9 @@ def admin_required(f):
   return decorated_function
 
 
-################################################################################
+###############################################################################
 # Sign in stuff
-################################################################################
+###############################################################################
 @app.route('/login/')
 @app.route('/signin/')
 def signin():
@@ -144,9 +143,9 @@ def signout():
   return flask.redirect(flask.url_for('welcome'))
 
 
-################################################################################
+###############################################################################
 # Google
-################################################################################
+###############################################################################
 @app.route('/signin/google/')
 def signin_google():
   google_url = users.create_login_url(
@@ -184,9 +183,9 @@ def retrieve_user_from_google(google_user):
     )
 
 
-################################################################################
+###############################################################################
 # Twitter
-################################################################################
+###############################################################################
 twitter_oauth = oauth.OAuth()
 
 
@@ -231,7 +230,7 @@ def signin_twitter():
       )
   except:
     flask.flash(
-        'Something went terribly wrong with Twitter sign in. Please try again.',
+        'Something went wrong with Twitter sign in. Please try again.',
         category='danger',
       )
     return flask.redirect(flask.url_for('signin', next=util.get_next_url()))
@@ -250,9 +249,9 @@ def retrieve_user_from_twitter(response):
     )
 
 
-################################################################################
+###############################################################################
 # Facebook
-################################################################################
+###############################################################################
 facebook_oauth = oauth.OAuth()
 
 facebook = facebook_oauth.remote_app(
@@ -307,9 +306,9 @@ def retrieve_user_from_facebook(response):
     )
 
 
-################################################################################
+###############################################################################
 # Helpers
-################################################################################
+###############################################################################
 def create_user_db(auth_id, name, username, email='', **params):
   username = re.sub(r'_+|-+|\s+', '.', username.split('@')[0].lower().strip())
   new_username = username
