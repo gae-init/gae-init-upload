@@ -3,6 +3,7 @@
 
 from datetime import datetime
 import argparse
+import json
 import os
 import shutil
 import sys
@@ -232,6 +233,14 @@ def install_dependencies():
     missing = True
   if not os.path.exists(os.path.join(DIR_NODE_MODULES, 'grunt')):
     missing = True
+  try:
+    file_package = os.path.join(DIR_NODE_MODULES, 'uglify-js', 'package.json')
+    package_json = json.load(open(file_package))
+    version = package_json['version']
+    if int(version.split('.')[0]) < 2:
+      missing = True
+  except:
+    missing = True
 
   if missing:
     os.system('npm install')
@@ -299,7 +308,7 @@ if args.minify:
         continue
       script_file = os.path.join(dir_static, script)
       merge_files(script_file, pretty_js)
-    os_execute(file_uglifyjs, '-nc', pretty_js, ugly_js)
+    os_execute(file_uglifyjs, pretty_js, '-cm', ugly_js)
     os.remove(pretty_js)
   print_out('DONE')
 
