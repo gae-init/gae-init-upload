@@ -1,5 +1,15 @@
-Version 0.9.2 - TBD
---------------------------
+Version 0.11.0 - 2014-01-25
+---------------------------
+- Merge users is now supported
+- Updated jQuery to 2.1.0
+- Updated Moment.js to 2.5.1
+- Moved NProgress related files to it's own directory
+- Fixed the bug for (Experimental) Federated Logins that were using Google Apps
+  accounts
+- Several other fixes and optimizations
+
+Version 0.10.0 - 2013-12-30
+---------------------------
 - Updated Moment.js to 2.5.0
 - Updated to UglifyJS2
 - Corrected Twitter's color
