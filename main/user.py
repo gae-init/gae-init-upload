@@ -109,10 +109,25 @@ def user_delete_service():
     })
 
 
-@ndb.transactional(xg=True)
 def delete_user_dbs(user_db_keys):
-  ndb.delete_multi(user_db_keys)
+  user_dbs = ndb.get_multi(user_db_keys)
+  for user_db in user_dbs:
+    delete_user_task(user_db.key)
 
+
+def delete_user_task(user_key, more_cursor=None):
+  resource_keys, more_cursor = util.retrieve_dbs(
+      model.Resource.query(),
+      user_key=user_key,
+      cursor=more_cursor,
+      keys_only=True,
+    )
+  if resource_keys:
+    ndb.delete_multi(resource_keys)
+  if more_cursor:
+    deferred.defer(move_resources_task, user_key, more_cursor)
+  else:
+    user_key.delete()
 
 ###############################################################################
 # User Merge
