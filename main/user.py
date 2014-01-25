@@ -2,6 +2,7 @@
 import copy
 
 from flask.ext import wtf
+from google.appengine.ext import deferred
 from google.appengine.ext import ndb
 import flask
 
@@ -199,7 +200,21 @@ def merge_user_dbs(user_db, depricated_keys):
     depricated_db.active = False
     if not depricated_db.username.startswith('_'):
       depricated_db.username = '_%s' % depricated_db.username
+    deferred.defer(move_resources_task, user_db.key, depricated_db.key)
   ndb.put_multi(depricated_dbs)
+
+
+def move_resources_task(user_key, depricated_key, more_cursor=None):
+  resource_dbs, more_cursor = util.retrieve_dbs(
+      model.Resource.query(),
+      user_key=depricated_key,
+      cursor=more_cursor,
+    )
+  for resource_db in resource_dbs:
+    resource_db.user_key = user_key
+  ndb.put_multi(resource_dbs)
+  if more_cursor:
+    deferred.defer(move_resources_task, user_key, depricated_key, more_cursor)
 
 
 ########################################################

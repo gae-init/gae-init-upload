@@ -32,7 +32,7 @@ class ResourceX(object):
   def size_human(self):
     return util.size_human(self.size or 0)
 
-  @ndb.ComputedProperty
+  @property
   def download_url(self):
     if self.key:
       return '%s%s' % (
@@ -41,7 +41,7 @@ class ResourceX(object):
         )
     return None
 
-  @ndb.ComputedProperty
+  @property
   def view_url(self):
     if self.key:
       return '%s%s' % (
@@ -50,7 +50,7 @@ class ResourceX(object):
         )
     return None
 
-  @ndb.ComputedProperty
+  @property
   def serve_url(self):
     return '%s/serve/%s' % (
         flask.request.url_root[:-1],
