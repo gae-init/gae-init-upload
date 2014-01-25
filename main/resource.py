@@ -45,6 +45,7 @@ def resource_upload():
         title='Resource Upload',
         html_class='resource-upload',
         get_upload_url=flask.url_for('resource_upload_service'),
+        has_json=True,
         upload_url=blobstore.create_upload_url(
             flask.request.path,
             gs_bucket_name=gs_bucket_name,
@@ -91,6 +92,7 @@ def resource_list():
       title='Resource List',
       resource_dbs=resource_dbs,
       more_url=util.generate_more_url(more_cursor),
+      has_json=True,
     )
 
 
@@ -114,6 +116,7 @@ def resource_view(resource_id):
       html_class='resource-view',
       title='%s' % (resource_db.name),
       resource_db=resource_db,
+      has_json=True,
     )
 
 
@@ -155,6 +158,7 @@ def resource_update(resource_id):
       title='%s' % (resource_db.name),
       resource_db=resource_db,
       form=form,
+      has_json=True,
     )
 
 
