@@ -112,7 +112,9 @@ def user_delete_service():
 def delete_user_dbs(user_db_keys):
   user_dbs = ndb.get_multi(user_db_keys)
   for user_db in user_dbs:
+    user_db.active = False
     delete_user_task(user_db.key)
+  ndb.put_multi(user_dbs)
 
 
 def delete_user_task(user_key, more_cursor=None):
@@ -128,6 +130,7 @@ def delete_user_task(user_key, more_cursor=None):
     deferred.defer(move_resources_task, user_key, more_cursor)
   else:
     user_key.delete()
+
 
 ###############################################################################
 # User Merge
