@@ -52,9 +52,11 @@ def get_next_url():
 ###############################################################################
 # Model manipulations
 ###############################################################################
-def retrieve_dbs(query, order=None, limit=None, cursor=None, keys_only=False, **filters):
-  ''' Retrieves entities from datastore, by applying cursor pagination
-  and equality filters. Returns dbs and more cursor value
+def retrieve_dbs(
+    query, order=None, limit=None, cursor=None, keys_only=None, **filters
+  ):
+  '''Retrieves entities from datastore, by applying cursor pagination
+  and equality filters. Returns dbs or keys and more cursor value
   '''
   limit = limit or config.DEFAULT_DB_LIMIT
   cursor = Cursor.from_websafe_string(cursor) if cursor else None
