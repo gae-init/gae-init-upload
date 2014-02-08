@@ -1,18 +1,33 @@
-# macro order_link(title, endpoint, property)
+# macro order_by_link(property, title, ignore=['cursor'])
   # if request.args.get('order') == property
-    <a href="{{url_for(endpoint, order='-' + property)}}">{{title}} <i class="fa fa-chevron-up"></i></a>
+    <a href="{{update_query_argument('order', '-' + property, ignore)}}">{{title}}</a>
+    <i class="fa fa-chevron-up text-muted"></i>
   # elif request.args.get('order') == '-' + property
-    <a href="{{url_for(endpoint, order=property)}}">{{title}} <i class="fa fa-chevron-down"></i></a>
+    <a href="{{update_query_argument('order', property, ignore)}}">{{title}}</a>
+    <i class="fa fa-chevron-down text-muted"></i>
   #else
-    <a href="{{url_for(endpoint, order=property)}}">{{title}}</a>
+    <a href="{{update_query_argument('order', property, ignore)}}">{{title}}</a>
   #endif
 # endmacro
 
 
-# macro next_link(more_url, caption='Next Page')
+# macro filter_by_link(property, value, icon=None, ignore=['cursor'])
+  # set value = '%s' % value
+  <a href="{{update_query_argument(property, None if request.args.get(property) == value else value, ignore)}}"
+     class="btn btn-default {{'active' if request.args.get(property) == value}}">
+    # if icon
+      <i class="fa fa-{{icon}}"></i>
+    # else
+      {{value}}
+    # endif
+  </a>
+# endmacro
+
+
+# macro next_link(more_url, caption=None)
   # if more_url
     <ul class="pager">
-      <li><a href="{{more_url}}" rel="nofollow">{{caption}}</a></li>
+      <li><a href="{{more_url}}" rel="nofollow">{{caption if caption else 'Next Page'}}</a></li>
     </ul>
   # endif
 # endmacro
