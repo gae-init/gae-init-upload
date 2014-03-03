@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import copy
+import logging
 
 from flask.ext import wtf
+from google.appengine.ext import blobstore
 from google.appengine.ext import deferred
 from google.appengine.ext import ndb
 import flask
@@ -123,7 +125,7 @@ def user_update(user_id):
 ###############################################################################
 # User Delete
 ###############################################################################
-@app.route('/_s/user/delete/', methods=['DELETE'])
+@app.route('/_s/user/delete/', methods=['DELETE', 'GET'])
 @auth.admin_required
 def user_delete_service():
   user_keys = util.param('user_keys', list)
@@ -136,22 +138,27 @@ def user_delete_service():
 
 
 def delete_user_dbs(user_db_keys):
-  user_dbs = ndb.get_multi(user_db_keys)
-  for user_db in user_dbs:
-    user_db.active = False
-    delete_user_task(user_db.key)
-  ndb.put_multi(user_dbs)
+  for user_key in user_db_keys:
+    delete_user_task(user_key)
 
 
 def delete_user_task(user_key, more_cursor=None):
-  resource_keys, more_cursor = util.retrieve_dbs(
+  resource_dbs, more_cursor = util.retrieve_dbs(
       model.Resource.query(),
       user_key=user_key,
       cursor=more_cursor,
-      keys_only=True,
     )
-  if resource_keys:
-    ndb.delete_multi(resource_keys)
+  if resource_dbs:
+    for resource_db in resource_dbs:
+      try:
+        blobstore.BlobInfo.get(resource_db.blob_key).delete()
+      except AttributeError:
+        logging.error('Blob %s not found during delete (resource_key: %s)' % (
+            resource_db.blob_key, resource_db.key().urlsafe(),
+          ))
+
+    ndb.delete_multi([resource_db.key for resource_db in resource_dbs])
+
   if more_cursor:
     deferred.defer(move_resources_task, user_key, more_cursor)
   else:

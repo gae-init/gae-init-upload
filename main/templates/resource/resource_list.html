@@ -8,12 +8,16 @@
     </h1>
   </div>
 
-  <table class="table table-bordered table-hover">
+  <div class="alert alert-warning alert-dismissable {{'hide' if resource_dbs | count > 0}}">
+    There are no resources
+  </div>
+
+  <table class="table table-bordered table-hover {{'hide' if resource_dbs | count == 0}}">
     <thead>
       <tr>
         <th class="col-xs-5">{{utils.order_by_link('name', 'Name')}}</th>
         <th class="col-xs-3 hidden-xs">{{utils.order_by_link('content_type', 'Content Type')}}</th>
-        <th class="col-xs-2 hidden-xs ">{{utils.order_by_link('created', 'Created')}}</th>
+        <th class="col-xs-2 hidden-xs">{{utils.order_by_link('created', 'Created')}}</th>
         <th class="col-xs-1 text-right">{{utils.order_by_link('size', 'Size')}}</th>
         <th class="col-xs-1">Actions</th>
       </tr>
@@ -32,21 +36,21 @@
               {{resource_db.created.strftime('%Y-%m-%d')}}
             </time>
           </td>
-          <td class="text-right">
+          <td class="text-right text-nowrap">
             {{resource_db.size_human}}
           </td>
-          <td nowrap>
+          <td class="text-nowrap">
             <a class="btn btn-xs btn-primary" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
-              <i class="fa fa-edit"></i>
+              <i class="fa fa-fw fa-edit"></i>
             </a>
             <a class="btn btn-xs btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
-              <i class="fa fa-cloud-download"></i>
+              <i class="fa fa-fw fa-cloud-download"></i>
             </a>
             <button class="btn btn-xs btn-danger btn-delete"
                 data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
                 data-target="#{{resource_db.key.urlsafe()}}"
               >
-              <i class="fa fa-trash-o"></i>
+              <i class="fa fa-fw fa-trash-o"></i>
             </button>
           </td>
         </tr>
@@ -54,9 +58,5 @@
     </tbody>
   </table>
 
-  # if more_url
-    <ul class="pager">
-      <li><a href="{{more_url}}">Next Page</a></li>
-    </ul>
-  # endif
+  {{utils.next_link(more_url)}}
 # endblock
