@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 from google.appengine.ext import ndb
@@ -27,6 +28,9 @@ class ConfigX(object):
 
 
 class UserX(object):
+  def has_permission(self, perm):
+    return self.admin or perm in self.permissions
+
   def avatar_url_size(self, size=None):
     return '//gravatar.com/avatar/%(hash)s?d=identicon&r=x%(size)s' % {
         'hash': hashlib.md5(self.email or self.username).hexdigest(),

@@ -11,10 +11,10 @@
   <table class="table table-bordered table-hover">
     <thead>
       <tr>
-        <th class="col-xs-5">{{utils.order_link('Name', 'resource_list', 'name')}}</th>
-        <th class="col-xs-3 hidden-xs">{{utils.order_link('Content Type', 'resource_list', 'content_type')}}</th>
-        <th class="col-xs-2 hidden-xs ">{{utils.order_link('Created', 'resource_list', 'created')}}</th>
-        <th class="col-xs-1 text-right">{{utils.order_link('Size', 'resource_list', 'size')}}</th>
+        <th class="col-xs-5">{{utils.order_by_link('name', 'Name')}}</th>
+        <th class="col-xs-3 hidden-xs">{{utils.order_by_link('content_type', 'Content Type')}}</th>
+        <th class="col-xs-2 hidden-xs ">{{utils.order_by_link('created', 'Created')}}</th>
+        <th class="col-xs-1 text-right">{{utils.order_by_link('size', 'Size')}}</th>
         <th class="col-xs-1">Actions</th>
       </tr>
     </thead>
