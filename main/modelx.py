@@ -1,5 +1,4 @@
-
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 from google.appengine.ext import ndb
 import util

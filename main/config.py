@@ -1,6 +1,10 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 
 import os
+
+PRODUCTION = os.environ.get('SERVER_SOFTWARE', '').startswith('Google App Eng')
+DEVELOPMENT = not PRODUCTION
+DEBUG = DEVELOPMENT
 
 try:
   # This part is surrounded in try/except because the config.py file is
@@ -8,21 +12,22 @@ try:
   # side files (*.less, *.coffee, *.js) and is not aware of the GAE
   from datetime import datetime
   from google.appengine.api import app_identity
+
+  CURRENT_VERSION_ID = os.environ.get('CURRENT_VERSION_ID')
+  CURRENT_VERSION_NAME = CURRENT_VERSION_ID.split('.')[0]
+  CURRENT_VERSION_TIMESTAMP = long(CURRENT_VERSION_ID.split('.')[1]) >> 28
+  if DEVELOPMENT:
+    import calendar
+    CURRENT_VERSION_TIMESTAMP = calendar.timegm(datetime.utcnow().timetuple())
+  CURRENT_VERSION_DATE = datetime.utcfromtimestamp(CURRENT_VERSION_TIMESTAMP)
+  APPLICATION_ID = app_identity.get_application_id()
+
   import model
 
   CONFIG_DB = model.Config.get_master_db()
   SECRET_KEY = CONFIG_DB.flask_secret_key.encode('ascii')
-  CURRENT_VERSION_ID = os.environ.get('CURRENT_VERSION_ID')
-  CURRENT_VERSION_NAME = CURRENT_VERSION_ID.split('.')[0]
-  CURRENT_VERSION_TIMESTAMP = long(CURRENT_VERSION_ID.split('.')[1]) >> 28
-  CURRENT_VERSION_DATE = datetime.fromtimestamp(CURRENT_VERSION_TIMESTAMP)
-  APPLICATION_ID = app_identity.get_application_id()
 except:
   pass
-
-PRODUCTION = os.environ.get('SERVER_SOFTWARE', '').startswith('Google App Eng')
-DEVELOPMENT = not PRODUCTION
-DEBUG = DEVELOPMENT
 
 DEFAULT_DB_LIMIT = 64
 
@@ -33,24 +38,19 @@ STYLES = [
     'src/style/style.less',
   ]
 
-SCRIPTS_MODULES = [
-    'libs',
-    'scripts',
-  ]
-
-SCRIPTS = {
-    'libs': [
-        'src/vendor/js/jquery/jquery.js',
-        'src/vendor/js/momentjs/moment.js',
-        'src/vendor/js/nprogress/nprogress.js',
-        'src/vendor/js/bootstrap/alert.js',
-        'src/vendor/js/bootstrap/button.js',
-        'src/vendor/js/bootstrap/transition.js',
-        'src/vendor/js/bootstrap/collapse.js',
-        'src/vendor/js/bootstrap/dropdown.js',
-        'src/vendor/js/bootstrap/tooltip.js',
-      ],
-    'scripts': [
+SCRIPTS = [
+    ('libs', [
+        'ext/js/jquery/jquery.js',
+        'ext/js/momentjs/moment.js',
+        'ext/js/nprogress/nprogress.js',
+        'ext/js/bootstrap/alert.js',
+        'ext/js/bootstrap/button.js',
+        'ext/js/bootstrap/transition.js',
+        'ext/js/bootstrap/collapse.js',
+        'ext/js/bootstrap/dropdown.js',
+        'ext/js/bootstrap/tooltip.js',
+      ]),
+    ('scripts', [
         'src/script/common/service.coffee',
         'src/script/common/util.coffee',
         'src/script/common/upload.coffee',
@@ -60,5 +60,5 @@ SCRIPTS = {
         'src/script/site/user.coffee',
         'src/script/site/pretty-file.coffee',
         'src/script/site/resource.coffee',
-      ],
-  }
+      ]),
+  ]
