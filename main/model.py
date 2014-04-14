@@ -77,11 +77,11 @@ class User(Base, modelx.UserX):
 class Resource(Base, modelx.ResourceX):
   user_key = ndb.KeyProperty(kind=User, required=True)
   blob_key = ndb.BlobKeyProperty(required=True)
-  name = ndb.StringProperty(indexed=True, required=True)
+  name = ndb.StringProperty(required=True)
   bucket_name = ndb.StringProperty()
   image_url = ndb.StringProperty(default='')
-  content_type = ndb.StringProperty(indexed=True, default='')
-  size = ndb.IntegerProperty(indexed=True, default=0)
+  content_type = ndb.StringProperty(default='')
+  size = ndb.IntegerProperty(default=0)
 
   _PROPERTIES = Base._PROPERTIES.union({
       'bucket_name',
