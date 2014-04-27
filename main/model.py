@@ -1,5 +1,6 @@
 # coding: utf-8
 
+from google.appengine.api import app_identity
 from google.appengine.ext import ndb
 
 import config
@@ -28,7 +29,8 @@ class Config(Base, modelx.ConfigX):
       'info', 'warning', 'success', 'danger',
     ])
   brand_name = ndb.StringProperty(default=config.APPLICATION_ID)
-  bucket_name = ndb.StringProperty(default='')
+  bucket_name = ndb.StringProperty(
+    default=app_identity.get_default_gcs_bucket_name())
   facebook_app_id = ndb.StringProperty(default='')
   facebook_app_secret = ndb.StringProperty(default='')
   feedback_email = ndb.StringProperty(default='')
