@@ -23,7 +23,6 @@
         {{form.csrf_token}}
 
         {{forms.text_field(form.brand_name, autofocus=True)}}
-        {{forms.text_field(form.bucket_name)}}
         {{forms.email_field(form.feedback_email)}}
         {{forms.checkbox_field(form.notify_on_new_user)}}
         {{forms.textarea_field(form.announcement_html)}}
@@ -36,6 +35,7 @@
           # include "admin/bit/flask_secret_key.html"
           # include "admin/bit/facebook_oauth.html"
           # include "admin/bit/google_analytics_tracking_id.html"
+          # include "admin/bit/google_cloud_bucket_name.html"
           # include "admin/bit/twitter_oauth.html"
         </div>
       </fieldset>
