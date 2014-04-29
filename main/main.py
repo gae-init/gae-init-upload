@@ -98,7 +98,7 @@ class FeedbackForm(wtf.Form):
   message = wtf.TextAreaField('Message',
       [wtf.validators.required()], filters=[util.strip_filter],
     )
-  email = wtf.StringField('Email (optional)',
+  email = wtf.StringField('Your email (optional)',
       [wtf.validators.optional(), wtf.validators.email()],
       filters=[util.email_filter],
     )
@@ -123,6 +123,15 @@ def feedback():
       html_class='feedback',
       form=form,
     )
+
+
+###############################################################################
+# Warmup request
+###############################################################################
+@app.route('/_ah/warmup')
+def warmup():
+  # TODO: put your warmup code here
+  return 'success'
 
 
 ###############################################################################
