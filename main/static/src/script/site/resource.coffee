@@ -54,7 +54,7 @@ upload_handler =
         return
 
       if progress == 100.0 and resource
-        $('.progress-bar', $resource).addClass('bar-success')
+        $('.progress-bar', $resource).addClass('progress-bar-success')
         $('.progress-text', $resource).text("Success #{size_human(file.size)}")
         if resource.image_url and $preview.text().length > 0
           $preview.css('background-image', "url(#{resource.image_url})")
@@ -83,4 +83,3 @@ window.init_delete_resource_button = () ->
           $("#{target}").remove()
         if redirect_url
           window.location.href = redirect_url
-
