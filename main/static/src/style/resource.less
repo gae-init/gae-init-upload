@@ -47,28 +47,27 @@ td {
       background-color: @well-bg;
     }
     h5 {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: @font-size-small;
+      .ellipsis;
     }
-  }
-  .progress {
-    margin-bottom: 0px;
-    position: relative;
-    background-color: #aaa;
-    .progress-text {
-      color: white;
-      position: absolute;
-      left: 0;
-      right: 0;
-      // font-size: @font-size-small;
-      text-align: center;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-shadow: 0 0 1px black, 0 0 1px black;
-      line-height: @line-height-computed;
-      cursor: default;
+    .progress {
+      margin-bottom: 0px;
+      position: relative;
+      background-color: #aaa;
+      .progress-text {
+        color: white;
+        position: absolute;
+        left: 0;
+        right: 0;
+        font-size: @font-size-small;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-shadow: 0 0 1px black, 0 0 1px black;
+        line-height: @line-height-computed;
+        cursor: default;
+      }
     }
   }
 }
