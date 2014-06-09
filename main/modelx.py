@@ -6,13 +6,7 @@ import flask
 import hashlib
 
 
-class BaseX(object):
-  @classmethod
-  def retrieve_one_by(cls, name, value):
-    return cls.query(getattr(cls, name) == value).get()
-
-
-class ConfigX(object):
+class Config(object):
   @classmethod
   def get_master_db(cls):
     return cls.get_or_insert('master')
@@ -26,7 +20,7 @@ class ConfigX(object):
     return bool(self.twitter_consumer_key and self.twitter_consumer_secret)
 
 
-class UserX(object):
+class User(object):
   def has_permission(self, perm):
     return self.admin or perm in self.permissions
 
