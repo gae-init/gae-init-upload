@@ -21,6 +21,7 @@ try:
     CURRENT_VERSION_TIMESTAMP = calendar.timegm(datetime.utcnow().timetuple())
   CURRENT_VERSION_DATE = datetime.utcfromtimestamp(CURRENT_VERSION_TIMESTAMP)
   APPLICATION_ID = app_identity.get_application_id()
+  DEFAULT_GCS_BUCKET_NAME = app_identity.get_default_gcs_bucket_name()
 
   import model
 
