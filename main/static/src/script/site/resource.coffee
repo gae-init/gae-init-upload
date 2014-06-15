@@ -44,7 +44,7 @@ upload_handler =
     (progress, resource, error) =>
       if error
         $('.progress-bar', $resource).css('width', '100%')
-        $('.progress-bar', $resource).addClass('bar-danger')
+        $('.progress-bar', $resource).addClass('progress-bar-danger')
         if error == 'too_big'
           $('.progress-text', $resource).text("Failed! Too big, max: #{size_human(file_uploader.max_size)}.")
         else if error == 'wrong_type'
