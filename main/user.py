@@ -35,7 +35,7 @@ def user_list():
       html_class='user-list',
       title='User List',
       user_dbs=user_dbs,
-      more_url=util.generate_more_url(user_cursor),
+      next_url=util.generate_next_url(user_cursor),
       has_json=True,
       permissions=sorted(set(permissions)),
     )
@@ -133,11 +133,11 @@ def delete_user_dbs(user_db_keys):
     delete_user_task(user_key)
 
 
-def delete_user_task(user_key, more_cursor=None):
-  resource_dbs, more_cursor = util.retrieve_dbs(
+def delete_user_task(user_key, next_cursor=None):
+  resource_dbs, next_cursor = util.get_dbs(
       model.Resource.query(),
       user_key=user_key,
-      cursor=more_cursor,
+      cursor=next_cursor,
     )
   if resource_dbs:
     for resource_db in resource_dbs:
@@ -150,8 +150,8 @@ def delete_user_task(user_key, more_cursor=None):
 
     ndb.delete_multi([resource_db.key for resource_db in resource_dbs])
 
-  if more_cursor:
-    deferred.defer(move_resources_task, user_key, more_cursor)
+  if next_cursor:
+    deferred.defer(move_resources_task, user_key, next_cursor)
   else:
     user_key.delete()
 
@@ -248,17 +248,17 @@ def merge_user_dbs(user_db, depricated_keys):
   ndb.put_multi(deprecated_dbs)
 
 
-def move_resources_task(user_key, depricated_key, more_cursor=None):
-  resource_dbs, more_cursor = util.retrieve_dbs(
+def move_resources_task(user_key, depricated_key, next_cursor=None):
+  resource_dbs, next_cursor = util.get_dbs(
       model.Resource.query(),
       user_key=depricated_key,
-      cursor=more_cursor,
+      cursor=next_cursor,
     )
   for resource_db in resource_dbs:
     resource_db.user_key = user_key
   ndb.put_multi(resource_dbs)
-  if more_cursor:
-    deferred.defer(move_resources_task, user_key, depricated_key, more_cursor)
+  if next_cursor:
+    deferred.defer(move_resources_task, user_key, depricated_key, next_cursor)
 
 
 ###############################################################################

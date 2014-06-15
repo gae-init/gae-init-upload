@@ -2,7 +2,7 @@
 # import 'macro/utils.html' as utils
 
 # block head
-  {{utils.prefetch_link(more_url)}}
+  {{utils.prefetch_link(next_url)}}
 # endblock
 
 # block content
@@ -104,12 +104,12 @@
             <td>{{user_db.username}}</td>
             <td>{{user_db.email}}</td>
             <td>
-              <time datetime="{{user_db.created.__str__()[:-3]}}">
+              <time datetime="{{user_db.created}}">
                 {{user_db.created.strftime('%Y-%m-%d')}}
               </time>
             </td>
             <td>
-              <time datetime="{{user_db.modified.__str__()[:-3]}}">
+              <time datetime="{{user_db.modified}}">
                 {{user_db.modified.strftime('%Y-%m-%d')}}
               </time>
             </td>
@@ -131,5 +131,5 @@
     </table>
   </div>
 
-  {{utils.next_link(more_url)}}
+  {{utils.next_link(next_url)}}
 # endblock
