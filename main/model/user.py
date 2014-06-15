@@ -48,3 +48,9 @@ class User(model.Base):
         permissions=permissions or util.param('permissions', list),
         **kwgs
       )
+
+  def get_resource_dbs(self, **kwgs):
+    return model.Resource.get_dbs(
+        user_key=self.key,
+        **kwgs
+      )

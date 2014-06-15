@@ -151,7 +151,7 @@ def delete_user_task(user_key, next_cursor=None):
     ndb.delete_multi([resource_db.key for resource_db in resource_dbs])
 
   if next_cursor:
-    deferred.defer(move_resources_task, user_key, next_cursor)
+    deferred.defer(delete_user_task, user_key, next_cursor)
   else:
     user_key.delete()
 

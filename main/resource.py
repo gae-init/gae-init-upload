@@ -75,13 +75,7 @@ def resource_upload():
 @app.route('/resource/', endpoint='resource_list')
 @auth.login_required
 def resource_list():
-  resource_dbs, next_cursor = util.get_dbs(
-      model.Resource.query(),
-      user_key=auth.current_user_key(),
-      limit=util.param('limit', int),
-      cursor=util.param('cursor'),
-      order=util.param('order') or '-created',
-    )
+  resource_dbs, next_cursor = auth.current_user_db().get_resource_dbs()
 
   if flask.request.path.startswith('/_s/'):
     return util.jsonify_model_dbs(resource_dbs, next_cursor)
