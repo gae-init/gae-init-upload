@@ -128,6 +128,7 @@ def user_delete_service():
     })
 
 
+@ndb.transactional(xg=True)
 def delete_user_dbs(user_db_keys):
   for user_key in user_db_keys:
     delete_user_task(user_key)
