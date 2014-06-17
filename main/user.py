@@ -236,9 +236,9 @@ def user_merge():
 
 
 @ndb.transactional(xg=True)
-def merge_user_dbs(user_db, depricated_keys):
-  # TODO: Merge possible user data before handlining deprecated users
-  deprecated_dbs = ndb.get_multi(depricated_keys)
+def merge_user_dbs(user_db, deprecated_keys):
+  # TODO: Merge possible user data before handling deprecated users
+  deprecated_dbs = ndb.get_multi(deprecated_keys)
   for deprecated_db in deprecated_dbs:
     deprecated_db.auth_ids = []
     deprecated_db.active = False
@@ -248,17 +248,17 @@ def merge_user_dbs(user_db, depricated_keys):
   ndb.put_multi(deprecated_dbs)
 
 
-def move_resources_task(user_key, depricated_key, next_cursor=None):
+def move_resources_task(user_key, deprecated_key, next_cursor=None):
   resource_dbs, next_cursor = util.get_dbs(
       model.Resource.query(),
-      user_key=depricated_key,
+      user_key=deprecated_key,
       cursor=next_cursor,
     )
   for resource_db in resource_dbs:
     resource_db.user_key = user_key
   ndb.put_multi(resource_dbs)
   if next_cursor:
-    deferred.defer(move_resources_task, user_key, depricated_key, next_cursor)
+    deferred.defer(move_resources_task, user_key, deprecated_key, next_cursor)
 
 
 ###############################################################################
