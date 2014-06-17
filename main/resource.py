@@ -75,17 +75,17 @@ def resource_upload():
 @app.route('/resource/', endpoint='resource_list')
 @auth.login_required
 def resource_list():
-  resource_dbs, next_cursor = auth.current_user_db().get_resource_dbs()
+  resource_dbs, resource_cursor = auth.current_user_db().get_resource_dbs()
 
   if flask.request.path.startswith('/_s/'):
-    return util.jsonify_model_dbs(resource_dbs, next_cursor)
+    return util.jsonify_model_dbs(resource_dbs, resource_cursor)
 
   return flask.render_template(
       'resource/resource_list.html',
       html_class='resource-list',
       title='Resource List',
       resource_dbs=resource_dbs,
-      next_url=util.generate_next_url(next_cursor),
+      next_url=util.generate_next_url(resource_cursor),
       has_json=True,
     )
 
