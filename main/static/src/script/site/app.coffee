@@ -21,11 +21,11 @@ $ -> $('html.user-merge').each ->
 $ -> $('html.admin-config').each ->
   init_admin_config()
 
-$ -> ($ 'html.resource-list').each ->
+$ -> $('html.resource-list').each ->
   init_resource_list()
 
-$ -> ($ 'html.resource-view').each ->
+$ -> $('html.resource-view').each ->
   init_resource_view()
 
-$ -> ($ 'html.resource-upload').each ->
+$ -> $('html.resource-upload').each ->
   init_resource_upload()
