@@ -41,16 +41,25 @@ class User(model.Base):
     })
 
   @classmethod
-  def get_dbs(cls, admin=None, active=None, permissions=None, **kwgs):
+  def get_dbs(cls, admin=None, active=None, permissions=None, **kwargs):
     return super(User, cls).get_dbs(
         admin=admin or util.param('admin', bool),
         active=active or util.param('active', bool),
         permissions=permissions or util.param('permissions', list),
-        **kwgs
+        **kwargs
       )
 
-  def get_resource_dbs(self, **kwgs):
+  @classmethod
+  def is_username_available(cls, username, self_db=None):
+    if self_db is None:
+      return cls.get_by('username', username) is None
+    user_dbs, _ = util.get_dbs(cls.query(), username=username, limit=2)
+    c = len(user_dbs)
+    return not (c == 2 or c == 1 and self_db.key != user_dbs[0].key)
+
+  @classmethod
+  def get_resource_dbs(self, **kwargs):
     return model.Resource.get_dbs(
         user_key=self.key,
-        **kwgs
+        **kwargs
       )
