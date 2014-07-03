@@ -29,7 +29,7 @@ def resource_upload():
 
     if flask.request.path.startswith('/_s/'):
       urls = []
-      for _ in range(count):
+      for i in range(count):
         urls.append({'upload_url': blobstore.create_upload_url(
             flask.request.path,
             gs_bucket_name=gs_bucket_name,
