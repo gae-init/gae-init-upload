@@ -7,6 +7,7 @@ from google.appengine.api import images
 from google.appengine.ext import blobstore
 import flask
 import werkzeug
+import wtforms
 
 import auth
 import config
@@ -118,7 +119,7 @@ def resource_view(resource_id):
 # Update
 ################################################################################
 class ResourceUpdateForm(wtf.Form):
-  name = wtf.TextField('Name', [wtf.validators.required()])
+  name = wtforms.TextField('Name', [wtforms.validators.required()])
 
 
 @app.route('/_s/resource/<int:resource_id>/update/', methods=['GET', 'POST'], endpoint='resource_update_service')

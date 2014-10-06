@@ -5,16 +5,15 @@
   <div class="page-header">
     <h1>{{title}}</h1>
     <p class="help-block">
-      For most of the settings you will
+      For most of the settings to be applied for everyone, you will
       # if instances_url
         <a href="{{instances_url}}" target="_blank">have to restart</a>
       # else
         have to restart
       # endif
-      the <a href="https://developers.google.com/appengine/docs/adminconsole/instances" target="_blank" >instances</a>
+      the <a href="https://developers.google.com/appengine/docs/adminconsole/instances" target="_blank" >instances</a>.
     </p>
   </div>
-
 
   <form method="POST" action="." novalidate>
     <div class="row">
@@ -24,7 +23,10 @@
 
         {{forms.text_field(form.brand_name, autofocus=True)}}
         {{forms.email_field(form.feedback_email)}}
+        {{forms.checkbox_field(form.anonymous_recaptcha)}}
         {{forms.checkbox_field(form.notify_on_new_user)}}
+        {{forms.checkbox_field(form.verify_email)}}
+        {{forms.checkbox_field(form.check_unique_email)}}
         {{forms.textarea_field(form.announcement_html)}}
         {{forms.select_field(form.announcement_type)}}
       </fieldset>
@@ -32,10 +34,11 @@
       <fieldset class="col-sm-6 col-md-7">
         <legend>Keys</legend>
         <div class="panel-group" id="oauth">
-          # include "admin/bit/flask_secret_key.html"
+          # include "admin/bit/security.html"
           # include "admin/bit/facebook_oauth.html"
           # include "admin/bit/google_analytics_tracking_id.html"
           # include "admin/bit/google_cloud_bucket_name.html"
+          # include "admin/bit/recaptcha.html"
           # include "admin/bit/twitter_oauth.html"
         </div>
       </fieldset>
