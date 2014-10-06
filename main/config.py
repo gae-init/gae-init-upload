@@ -31,9 +31,11 @@ else:
   SECRET_KEY = CONFIG_DB.flask_secret_key.encode('ascii')
   RECAPTCHA_PUBLIC_KEY = CONFIG_DB.recaptcha_public_key
   RECAPTCHA_PRIVATE_KEY = CONFIG_DB.recaptcha_private_key
+  RECAPTCHA_LIMIT = 8
+
 
 DEFAULT_DB_LIMIT = 64
-
+SIGNIN_RETRY_LIMIT = 4
 
 ###############################################################################
 # Client modules, also used by the run.py script.
@@ -61,7 +63,7 @@ SCRIPTS = [
         'src/script/site/app.coffee',
         'src/script/site/admin.coffee',
         'src/script/site/profile.coffee',
-        'src/script/site/signin.coffee',
+        'src/script/site/auth.coffee',
         'src/script/site/user.coffee',
         'src/script/site/pretty-file.coffee',
         'src/script/site/resource.coffee',

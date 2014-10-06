@@ -20,14 +20,13 @@ app.jinja_env.globals.update(
     update_query_argument=util.update_query_argument,
   )
 
-
 import user
 import admin
 import auth
 import model
+import profile
 import resource
 import task
-
 
 if config.DEVELOPMENT:
   from werkzeug import debug
@@ -55,55 +54,6 @@ def sitemap():
     ))
   response.headers['Content-Type'] = 'application/xml'
   return response
-
-
-###############################################################################
-# Profile stuff
-###############################################################################
-class ProfileUpdateForm(wtf.Form):
-  name = wtforms.StringField(
-      'Name',
-      [wtforms.validators.required()], filters=[util.strip_filter],
-    )
-  email = wtforms.StringField(
-      'Email',
-      [wtforms.validators.optional(), wtforms.validators.email()],
-      filters=[util.email_filter],
-    )
-
-
-@app.route('/_s/profile/', endpoint='profile_service')
-@app.route('/profile/', methods=['GET', 'POST'])
-@auth.login_required
-def profile():
-  user_db = auth.current_user_db()
-  form = ProfileUpdateForm(obj=user_db)
-
-  if form.validate_on_submit():
-    email = form.email.data
-    if email and not user_db.is_email_available(email, user_db.key):
-      form.email.errors.append('This email is already taken.')
-
-    if not form.errors:
-      send_verification = not user_db.token or user_db.email != email
-      form.populate_obj(user_db)
-      if send_verification:
-        user_db.verified = False
-        task.verify_email_notification(user_db)
-      user_db.put()
-      return flask.redirect(flask.url_for('welcome'))
-
-  if flask.request.path.startswith('/_s/'):
-    return util.jsonify_model_db(user_db)
-
-  return flask.render_template(
-      'profile.html',
-      title=user_db.name,
-      html_class='profile',
-      form=form,
-      user_db=user_db,
-      has_json=True,
-    )
 
 
 ###############################################################################
