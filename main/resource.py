@@ -131,16 +131,14 @@ def resource_update(resource_id):
   if not resource_db or resource_db.user_key != auth.current_user_key():
     return flask.abort(404)
 
-  form = ResourceUpdateForm()
+  form = ResourceUpdateForm(obj=resource_db)
 
   if form.validate_on_submit():
-    resource_db.name = form.name.data
+    form.populate_obj(resource_db)
     resource_db.put()
     return flask.redirect(flask.url_for(
         'resource_view', resource_id=resource_db.key.id(),
       ))
-  if not form.errors:
-    form.name.data = resource_db.name
 
   if flask.request.path.startswith('/_s/'):
     if form.errors:
