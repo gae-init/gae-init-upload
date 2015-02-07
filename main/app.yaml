@@ -18,6 +18,9 @@ libraries:
 - name: PIL
   version: latest
 
+error_handlers:
+- file: templates/error_static.html
+
 handlers:
 - url: /favicon.ico
   static_files: static/img/favicon.ico
@@ -42,6 +45,7 @@ handlers:
 
 - url: /.*
   script: main.app
+  secure: always
 
 skip_files:
 - ^(.*/)?#.*#

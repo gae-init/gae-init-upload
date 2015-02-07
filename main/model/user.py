@@ -6,6 +6,7 @@ import hashlib
 
 from google.appengine.ext import ndb
 
+from api import fields
 import model
 import util
 import config
@@ -33,18 +34,6 @@ class User(model.Base):
         'size': '&s=%d' % size if size > 0 else '',
       }
   avatar_url = property(avatar_url_size)
-
-  _PROPERTIES = model.Base._PROPERTIES.union({
-      'active',
-      'admin',
-      'auth_ids',
-      'avatar_url',
-      'email',
-      'name',
-      'permissions',
-      'username',
-      'verified',
-    })
 
   @classmethod
   def get_dbs(
@@ -76,3 +65,18 @@ class User(model.Base):
 
   def get_resource_dbs(self, **kwargs):
     return model.Resource.get_dbs(user_key=self.key, **kwargs)
+
+
+USER_FIELDS = {
+    'active': fields.Boolean,
+    'admin': fields.Boolean,
+    'auth_ids': fields.String,
+    'avatar_url': fields.String,
+    'email': fields.String,
+    'name': fields.String,
+    'permissions': fields.String,
+    'username': fields.String,
+    'verified': fields.Boolean,
+  }
+
+USER_FIELDS.update(model.BASE_FIELDS)

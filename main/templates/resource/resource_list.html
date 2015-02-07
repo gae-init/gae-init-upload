@@ -47,7 +47,7 @@
               <i class="fa fa-fw fa-cloud-download"></i>
             </a>
             <button class="btn btn-xs btn-danger btn-delete"
-                data-service-url="{{url_for('resource_delete', resource_id=resource_db.key.id())}}"
+                data-api-url="{{url_for('api.resource', key=resource_db.key.urlsafe())}}"
                 data-target="#{{resource_db.key.urlsafe()}}"
               >
               <i class="fa fa-fw fa-trash-o"></i>

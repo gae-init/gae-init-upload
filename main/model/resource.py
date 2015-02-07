@@ -5,6 +5,7 @@ from __future__ import absolute_import
 from google.appengine.ext import ndb
 import flask
 
+from api import fields
 import model
 import util
 
@@ -42,14 +43,17 @@ class Resource(model.Base):
   def serve_url(self):
     return '%s/serve/%s' % (flask.request.url_root[:-1], self.blob_key)
 
-  _PROPERTIES = model.Base._PROPERTIES.union({
-      'bucket_name',
-      'content_type',
-      'download_url',
-      'image_url',
-      'name',
-      'serve_url',
-      'size',
-      'size_human',
-      'view_url',
-    })
+
+RESOURCE_FIELDS = {
+    'bucket_name': fields.String,
+    'content_type': fields.String,
+    'download_url': fields.String,
+    'image_url': fields.String,
+    'name': fields.String,
+    'serve_url': fields.String,
+    'size': fields.Integer,
+    'size_human': fields.String,
+    'view_url': fields.String,
+  }
+
+RESOURCE_FIELDS.update(model.BASE_FIELDS)

@@ -20,19 +20,29 @@ app.jinja_env.globals.update(
     update_query_argument=util.update_query_argument,
   )
 
-import user
-import admin
+from control import user
+from control import admin
+from control import profile
+from control import resource
+from control import test
 import auth
 import model
-import profile
-import resource
 import task
-import test
+
+
+from api import helpers as restful
+api = restful.Api(app)
+
+from api.v1 import auth_api
+from api.v1 import config_api
+from api.v1 import resource_api
+from api.v1 import user_api
+
 
 if config.DEVELOPMENT:
   from werkzeug import debug
   app.wsgi_app = debug.DebuggedApplication(app.wsgi_app, evalex=True)
-  app.testing = True
+  app.testing = False
 
 
 ###############################################################################
@@ -69,7 +79,7 @@ class FeedbackForm(wtf.Form):
       [wtforms.validators.optional(), wtforms.validators.email()],
       filters=[util.email_filter],
     )
-  recaptcha = wtf.RecaptchaField('Are you human?')
+  recaptcha = wtf.RecaptchaField()
 
 
 @app.route('/feedback/', methods=['GET', 'POST'])
@@ -123,14 +133,8 @@ def error_handler(e):
     e.code = 500
     e.name = 'Internal Server Error'
 
-  if flask.request.path.startswith('/_s/'):
-    return util.jsonpify({
-        'status': 'error',
-        'error_code': e.code,
-        'error_name': util.slugify(e.name),
-        'error_message': e.name,
-        'error_class': e.__class__.__name__,
-      }), e.code
+  if flask.request.path.startswith('/api/'):
+    return api.handle_error(e)
 
   return flask.render_template(
       'error.html',

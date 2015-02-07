@@ -56,7 +56,7 @@ Tech Stack
 ----------
 
   - [Google App Engine][], [NDB][]
-  - [Jinja2][], [Flask][], [Flask-WTF][]
+  - [Jinja2][], [Flask][], [Flask-RESTful][], [Flask-WTF][]
   - [CoffeeScript][], [Less][]
   - [Bootstrap][], [Font Awesome][], [Social Buttons][]
   - [jQuery][], [NProgress][], [Moment.js][]
@@ -94,6 +94,7 @@ Author
 [coffeescript]: http://coffeescript.org/
 [docs]: http://docs.gae-init.appspot.com
 [feature list]: http://docs.gae-init.appspot.com/features/
+[flask-restful]: https://flask-restful.readthedocs.org
 [flask-wtf]: https://flask-wtf.readthedocs.org
 [flask]: http://flask.pocoo.org/
 [font awesome]: http://fortawesome.github.com/Font-Awesome/

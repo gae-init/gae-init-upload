@@ -57,7 +57,7 @@ SCRIPTS = [
         'ext/bootstrap/js/tooltip.js',
       ]),
     ('scripts', [
-        'src/script/common/service.coffee',
+        'src/script/common/api.coffee',
         'src/script/common/util.coffee',
         'src/script/common/upload.coffee',
         'src/script/site/app.coffee',

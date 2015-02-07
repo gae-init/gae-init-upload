@@ -154,11 +154,6 @@
       {{field.widget.server}}
       {{field.widget.script_url}}
       {{field.widget.frame_url}}
-      {{field.label(class='control-label', for='recaptcha_response_field')}}
-      <div class="small pull-right">
-        <a id="recaptcha_reload_btn" href="#" title="Get a new challenge" tabindex="-1"><span class="fa fa-refresh"></span></a> |
-        <a href="http://www.google.com/intl/en/policies/" target="_blank" tabindex="-1">Privacy & Terms</a>
-      </div>
       {{field}}
       {{field_errors(field)}}
       {{field_description(field)}}
@@ -190,4 +185,13 @@
       </div>
     </div>
   </div>
+# endmacro
+
+
+# macro data_loading_text(text='Please wait..', icon='fa fa-spin fa-spinner')
+  # if icon
+    data-loading-text="<span class='{{icon}}'></span> {{text}}"
+  # else
+    data-loading-text="{{text}}"
+  # endif
 # endmacro
