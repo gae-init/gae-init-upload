@@ -66,17 +66,16 @@ class User(model.Base):
   def get_resource_dbs(self, **kwargs):
     return model.Resource.get_dbs(user_key=self.key, **kwargs)
 
+  FIELDS = {
+      'active': fields.Boolean,
+      'admin': fields.Boolean,
+      'auth_ids': fields.String,
+      'avatar_url': fields.String,
+      'email': fields.String,
+      'name': fields.String,
+      'permissions': fields.String,
+      'username': fields.String,
+      'verified': fields.Boolean,
+    }
 
-USER_FIELDS = {
-    'active': fields.Boolean,
-    'admin': fields.Boolean,
-    'auth_ids': fields.String,
-    'avatar_url': fields.String,
-    'email': fields.String,
-    'name': fields.String,
-    'permissions': fields.String,
-    'username': fields.String,
-    'verified': fields.Boolean,
-  }
-
-USER_FIELDS.update(model.BASE_FIELDS)
+  FIELDS.update(model.Base.FIELDS)

@@ -43,17 +43,16 @@ class Resource(model.Base):
   def serve_url(self):
     return '%s/serve/%s' % (flask.request.url_root[:-1], self.blob_key)
 
+  FIELDS = {
+      'bucket_name': fields.String,
+      'content_type': fields.String,
+      'download_url': fields.String,
+      'image_url': fields.String,
+      'name': fields.String,
+      'serve_url': fields.String,
+      'size': fields.Integer,
+      'size_human': fields.String,
+      'view_url': fields.String,
+    }
 
-RESOURCE_FIELDS = {
-    'bucket_name': fields.String,
-    'content_type': fields.String,
-    'download_url': fields.String,
-    'image_url': fields.String,
-    'name': fields.String,
-    'serve_url': fields.String,
-    'size': fields.Integer,
-    'size_human': fields.String,
-    'view_url': fields.String,
-  }
-
-RESOURCE_FIELDS.update(model.BASE_FIELDS)
+  FIELDS.update(model.Base.FIELDS)

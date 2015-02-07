@@ -16,6 +16,9 @@ import util
 from main import api
 
 
+###############################################################################
+# Endpoints
+###############################################################################
 @api.resource('/api/v1/resources/', endpoint='api.resources')
 class UsersAPI(restful.Resource):
   @auth.admin_required
@@ -24,11 +27,11 @@ class UsersAPI(restful.Resource):
     if resource_keys:
       resource_db_keys = [ndb.Key(urlsafe=k) for k in resource_keys]
       resource_dbs = ndb.get_multi(resource_db_keys)
-      return helpers.make_response(resource_dbs, model.RESOURCE_FIELDS)
+      return helpers.make_response(resource_dbs, model.Resource.FIELDS)
 
     resource_dbs, next_cursor = model.Resource.get_dbs()
     return helpers.make_response(
-        resource_dbs, model.RESOURCE_FIELDS, next_cursor,
+        resource_dbs, model.Resource.FIELDS, next_cursor,
       )
 
   @auth.admin_required
@@ -53,7 +56,7 @@ class ResourceAPI(restful.Resource):
     resource_db = ndb.Key(urlsafe=key).get()
     if not resource_db and resource_db.user_key != auth.current_user_key():
       helpers.make_not_found_exception('Resource %s not found' % key)
-    return helpers.make_response(resource_db, model.RESOURCE_FIELDS)
+    return helpers.make_response(resource_db, model.Resource.FIELDS)
 
   @auth.login_required
   def delete(self, key):
@@ -61,7 +64,7 @@ class ResourceAPI(restful.Resource):
     if not resource_db or resource_db.user_key != auth.current_user_key():
       helpers.make_not_found_exception('Resource %s not found' % key)
     delete_resource_key(resource_db.key)
-    return helpers.make_response(resource_db, model.RESOURCE_FIELDS)
+    return helpers.make_response(resource_db, model.Resource.FIELDS)
 
 
 @api.resource('/api/v1/resource/upload/', endpoint='api.resource.upload')
@@ -88,7 +91,7 @@ class ResourceUploadAPI(restful.Resource):
   def post(self):
     resource_db = resource_db_from_upload()
     if resource_db:
-      return helpers.make_response(resource_db, model.RESOURCE_FIELDS)
+      return helpers.make_response(resource_db, model.Resource.FIELDS)
     else:
       flask.abort(500)
 
