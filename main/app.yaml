@@ -41,7 +41,7 @@ handlers:
   expiration: 1000d
 
 - url: /serve/.*
-  script: serve.app
+  script: control.serve.app
 
 - url: /.*
   script: main.app
