@@ -16,9 +16,6 @@ import util
 from main import api
 
 
-###############################################################################
-# Endpoints
-###############################################################################
 @api.resource('/api/v1/resources/', endpoint='api.resources')
 class UsersAPI(restful.Resource):
   @auth.admin_required
