@@ -64,3 +64,4 @@ class Config(model.Base, model.ConfigAuth):
     }
 
   FIELDS.update(model.Base.FIELDS)
+  FIELDS.update(model.ConfigAuth.FIELDS)

@@ -92,6 +92,8 @@ class AuthUpdateForm(wtf.Form):
   microsoft_client_secret = wtforms.StringField('Client Secret', filters=[util.strip_filter])
   twitter_consumer_key = wtforms.StringField('Consumer Key', filters=[util.strip_filter])
   twitter_consumer_secret = wtforms.StringField('Consumer Secret', filters=[util.strip_filter])
+  vk_app_id = wtforms.StringField('App ID', filters=[util.strip_filter])
+  vk_app_secret = wtforms.StringField('App Secret', filters=[util.strip_filter])
   yahoo_consumer_key = wtforms.StringField('Consumer Key', filters=[util.strip_filter])
   yahoo_consumer_secret = wtforms.StringField('Consumer Secret', filters=[util.strip_filter])
 
@@ -113,5 +115,5 @@ def admin_auth():
       title='Auth Config',
       html_class='admin-auth',
       form=form,
-      api_url=flask.url_for('api.auth'),
+      api_url=flask.url_for('api.config'),
     )
