@@ -13,7 +13,7 @@
       </a>
 
       <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-primary" disabled >Limit</button>
+        <button type="button" class="btn btn-primary" disabled>Limit</button>
         {{utils.filter_by_link('limit', 16)}}
         {{utils.filter_by_link('limit', 64)}}
         {{utils.filter_by_link('limit', 128)}}
@@ -22,26 +22,26 @@
       </div>
 
       <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-danger" disabled >Admins</button>
+        <button type="button" class="btn btn-danger" disabled>Admins</button>
         {{utils.filter_by_link('admin', True, 'thumbs-o-up')}}
         {{utils.filter_by_link('admin', False, 'thumbs-o-down')}}
       </div>
 
       <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-success" disabled >Verified</button>
+        <button type="button" class="btn btn-success" disabled>Verified</button>
         {{utils.filter_by_link('verified', True, 'thumbs-o-up')}}
         {{utils.filter_by_link('verified', False, 'thumbs-o-down')}}
       </div>
 
       <div class="btn-group btn-group-sm">
-        <button type="button" class="btn btn-info" disabled >Active</button>
+        <button type="button" class="btn btn-info" disabled>Active</button>
         {{utils.filter_by_link('active', True, 'thumbs-o-up')}}
         {{utils.filter_by_link('active', False, 'thumbs-o-down')}}
       </div>
 
 
       <div class="btn-group btn-group-sm {{'hide' if not permissions}}">
-        <button type="button" class="btn btn-warning" disabled >Permissions</button>
+        <button type="button" class="btn btn-warning" disabled>Permissions</button>
         # for permission in permissions
           {{utils.filter_by_link('permissions', permission, is_list=True)}}
         # endfor
@@ -97,13 +97,13 @@
       </thead>
       <tbody>
         # for user_db in user_dbs
-          <tr id="{{user_db.key.urlsafe()}}" class="{{'text-muted' if not user_db.active}}">
+          <tr id="{{user_db.key.urlsafe()}}" class="row-link {{'text-muted' if not user_db.active}}" data-href="{{url_for('user_update', user_id=user_db.key.id())}}">
             <td class="name">
-              <label>
+              <label class="not-link">
                 <input type="checkbox" name="user_db" value="{{user_db.key.urlsafe()}}">
                 <img src="{{user_db.avatar_url_size(80)}}" alt="Avatar of {{user_db.name}}">
               </label>
-              <a href="{{url_for('user_update', user_id=user_db.key.id())}}">{{user_db.name}}</a>
+              <span>{{user_db.name}}</span>
               # if current_user.id == user_db.key.id()
                 <span class="fa fa-hand-o-left" title="You"></span>
               # endif
@@ -124,7 +124,7 @@
                 {{user_db.created.strftime('%Y-%m-%d')}}
               </time>
             </td>
-            <td>
+            <td class="not-link">
               # if user_db.admin
                 <a href="{{update_query_argument('admin', True)}}" class="label label-danger"><span class="fa fa-cog"></span> admin</a>
               # endif

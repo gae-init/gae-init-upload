@@ -614,7 +614,7 @@ def run_start():
   clear = 'yes' if ARGS.flush else 'no'
   port = int(ARGS.port)
   run_command = ' '.join(map(str, [
-      '"%s"' % os.path.join(find_gae_path(), 'dev_appserver.py'),
+      '"dev_appserver.py"',
       DIR_MAIN,
       '--host %s' % ARGS.host,
       '--port %s' % port,
