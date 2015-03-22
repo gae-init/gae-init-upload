@@ -9,7 +9,7 @@
   <div class="panel panel-default">
     <div class="panel-body">
       <a class="btn btn-sm btn-primary" href="{{url_for('user_update')}}">
-        <span class="fa fa-user-plus"></span> New User
+        <span class="fa fa-fw fa-user-plus"></span> New User
       </a>
 
       <div class="btn-group btn-group-sm">
@@ -58,7 +58,7 @@
         <ul class="dropdown-menu">
           <li>
             <a id="user-delete"
-                data-api-url="{{url_for('api.users')}}"
+                data-api-url="{{url_for('api.user.list')}}"
                 data-confirm="Are you sure you want to delete {users} selected user(s)?"
                 data-success="{users} user(s) deleted."
                 data-error="Something went wrong while deleting. Please try again."

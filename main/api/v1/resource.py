@@ -1,5 +1,7 @@
 # coding: utf-8
 
+from __future__ import absolute_import
+
 from flask.ext import restful
 from google.appengine.api import images
 from google.appengine.ext import blobstore
@@ -13,13 +15,13 @@ import config
 import model
 import util
 
-from main import api
+from main import api_v1
 
 
 ###############################################################################
 # Endpoints
 ###############################################################################
-@api.resource('/api/v1/resources/', endpoint='api.resources')
+@api_v1.resource('/resources/', endpoint='api.resources')
 class UsersAPI(restful.Resource):
   @auth.admin_required
   def get(self):
@@ -49,7 +51,7 @@ class UsersAPI(restful.Resource):
       })
 
 
-@api.resource('/api/v1/resource/<string:key>/', endpoint='api.resource')
+@api_v1.resource('/resource/<string:key>/', endpoint='api.resource')
 class ResourceAPI(restful.Resource):
   @auth.login_required
   def get(self, key):
@@ -67,7 +69,7 @@ class ResourceAPI(restful.Resource):
     return helpers.make_response(resource_db, model.Resource.FIELDS)
 
 
-@api.resource('/api/v1/resource/upload/', endpoint='api.resource.upload')
+@api_v1.resource('/resource/upload/', endpoint='api.resource.upload')
 class ResourceUploadAPI(restful.Resource):
   @auth.login_required
   def get(self):
