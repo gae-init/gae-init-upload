@@ -57,7 +57,7 @@ def resource_list():
 ################################################################################
 # View
 ################################################################################
-@app.route('/resource/<int:resource_id>/view/', endpoint='resource_view')
+@app.route('/resource/<int:resource_id>/', endpoint='resource_view')
 @auth.login_required
 def resource_view(resource_id):
   resource_db = model.Resource.get_by_id(resource_id)
