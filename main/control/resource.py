@@ -21,19 +21,17 @@ from main import app
 @app.route('/resource/upload/')
 @auth.login_required
 def resource_upload():
-  if flask.request.method == 'GET':
-    gs_bucket_name = config.CONFIG_DB.bucket_name or None
-    return flask.render_template(
-        'resource/resource_upload.html',
-        title='Resource Upload',
-        html_class='resource-upload',
-        get_upload_url=flask.url_for('api.resource.upload'),
-        has_json=True,
-        upload_url=blobstore.create_upload_url(
-            flask.request.path,
-            gs_bucket_name=gs_bucket_name,
-          ),
-      )
+  return flask.render_template(
+      'resource/resource_upload.html',
+      title='Resource Upload',
+      html_class='resource-upload',
+      get_upload_url=flask.url_for('api.resource.upload'),
+      has_json=True,
+      upload_url=blobstore.create_upload_url(
+          flask.request.path,
+          gs_bucket_name=config.CONFIG_DB.bucket_name or None,
+        ),
+    )
 
 
 ################################################################################
@@ -115,6 +113,8 @@ def resource_update(resource_id):
 @auth.login_required
 def resource_download(resource_id):
   resource_db = model.Resource.get_by_id(resource_id)
+  if not resource_db or resource_db.user_key != auth.current_user_key():
+    return flask.abort(404)
   name = urllib.quote(resource_db.name.encode('utf-8'))
   url = '/serve/%s?save_as=%s' % (resource_db.blob_key, name)
   return flask.redirect(url)

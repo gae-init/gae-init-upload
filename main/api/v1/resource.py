@@ -74,14 +74,12 @@ class ResourceUploadAPI(restful.Resource):
   @auth.login_required
   def get(self):
     if flask.request.method == 'GET':
-      gs_bucket_name = config.CONFIG_DB.bucket_name or None
       count = util.param('count', int) or 1
-
       urls = []
       for i in range(count):
         urls.append({'upload_url': blobstore.create_upload_url(
             flask.request.path,
-            gs_bucket_name=gs_bucket_name,
+            gs_bucket_name=config.CONFIG_DB.bucket_name or None,
           )})
       return flask.jsonify({
           'status': 'success',
