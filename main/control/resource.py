@@ -48,7 +48,7 @@ def resource_list():
       title='Resource List',
       resource_dbs=resource_dbs,
       next_url=util.generate_next_url(resource_cursor),
-      api_url=flask.url_for('api.resources'),
+      api_url=flask.url_for('api.resource.list'),
     )
 
 

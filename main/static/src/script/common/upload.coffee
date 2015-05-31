@@ -4,7 +4,7 @@
       @upload_handler = @options.upload_handler
       @selector = @options.selector
       @drop_area = @options.drop_area
-      @upload_url = @options.upload_url or "/_s#{window.location.pathname}"
+      @upload_url = @options.upload_url or "/api/v1#{window.location.pathname}"
       @confirm_message = @options.confirm_message or 'Files are still being uploaded.'
       @allowed_types = @options.allowed_types
       @max_size = @options.max_size

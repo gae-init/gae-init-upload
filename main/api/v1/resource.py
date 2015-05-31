@@ -21,8 +21,8 @@ from main import api_v1
 ###############################################################################
 # Endpoints
 ###############################################################################
-@api_v1.resource('/resources/', endpoint='api.resources')
-class UsersAPI(restful.Resource):
+@api_v1.resource('/resource/', endpoint='api.resource.list')
+class ResourceListAPI(restful.Resource):
   @auth.admin_required
   def get(self):
     resource_keys = util.param('resource_keys', list)
