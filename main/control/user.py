@@ -25,7 +25,9 @@ from main import app
 @app.route('/admin/user/')
 @auth.admin_required
 def user_list():
-  user_dbs, user_cursor = model.User.get_dbs(email=util.param('email'))
+  user_dbs, cursors = model.User.get_dbs(
+      email=util.param('email'), prev_cursor=True,
+    )
   permissions = list(UserUpdateForm._permission_choices)
   permissions += util.param('permissions', list) or []
   return flask.render_template(
@@ -33,7 +35,8 @@ def user_list():
       html_class='user-list',
       title='User List',
       user_dbs=user_dbs,
-      next_url=util.generate_next_url(user_cursor),
+      next_url=util.generate_next_url(cursors['next']),
+      prev_url=util.generate_next_url(cursors['prev']),
       api_url=flask.url_for('api.user.list'),
       permissions=sorted(set(permissions)),
     )
@@ -45,7 +48,7 @@ def user_list():
 class UserUpdateForm(wtf.Form):
   username = wtforms.StringField(
       model.User.username._verbose_name,
-      [wtforms.validators.required(), wtforms.validators.length(min=3)],
+      [wtforms.validators.required(), wtforms.validators.length(min=2)],
       filters=[util.email_filter],
     )
   name = wtforms.StringField(
@@ -156,7 +159,7 @@ def user_forgot(token=None):
   if form.validate_on_submit():
     cache.bump_auth_attempt()
     email = form.email.data
-    user_dbs, _ = util.get_dbs(
+    user_dbs, cursors = util.get_dbs(
         model.User.query(), email=email, active=True, limit=2,
       )
     count = len(user_dbs)
