@@ -1,52 +1,71 @@
 # extends 'base.html'
+# import 'macro/utils.html' as utils
 
 # block content
   <div class="page-header">
+    <div class="pull-right">
+      <a class="btn btn-default" href="{{url_for('resource_upload')}}" title="Upload">
+        <span class="fa fa-plus fa-fw"></span>
+      </a>
+      <a class="btn btn-primary" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
+        <span class="fa fa-fw fa-pencil"></span> Edit
+      </a>
+      <a class="btn btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}" title="Download">
+        <span class="fa fa-cloud-download"></span>
+      </a>
+      <button class="btn btn-danger btn-delete"
+          data-api-url="{{url_for('api.resource', key=resource_db.key.urlsafe())}}"
+          data-redirect-url="{{url_for('resource_list')}}"
+          title="Delete"
+        >
+        <span class="fa fa-trash-o"></span>
+      </button>
+    </div>
     <h1>
+      {{utils.back_link('Back to resource list', 'resource_list')}}
       {{title}}
     </h1>
   </div>
 
   <div class="row">
-    <div class="col-md-4">
-      <form class="form" method="POST" action=".">
-        <fieldset>
-          <div class="form-group ">
-            <label class="control-label" for="name">Name</label>
-            <input class="form-control" id="name" name="name" type="text" value="{{resource_db.name}}" readonly>
-          </div>
-
-          <div class="form-group ">
-            <label class="control-label" for="content_type">Content Type</label>
-            <input class="form-control" id="content_type" name="content_type" type="text" value="{{resource_db.content_type}}" readonly>
-          </div>
-          <div class="form-group ">
-            <label class="control-label" for="size">Size</label>
-            <input class="form-control" id="size" name="size" type="text" value="{{resource_db.size_human}}" readonly>
-          </div>
-
-          <a class="btn btn-success btn-block" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
-            <i class="fa fa-cloud-download"></i> Download
-          </a>
-          <a class="btn btn-primary btn-block" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
-            <i class="fa fa-edit"></i> Update
-          </a>
-          <button class="btn btn-danger btn-block btn-delete"
-              data-api-url="{{url_for('api.resource', key=resource_db.key.urlsafe())}}"
-              data-redirect-url="{{url_for('resource_list')}}"
-            >
-            <i class="fa fa-trash-o"></i> Delete
-          </button>
-          <a class="btn btn-info btn-block" href="{{url_for('resource_list')}}">
-            <i class="fa fa-th-list"></i> View All
-          </a>
-        </fieldset>
-      </form>
+    <div class="col-md-6">
+      <table class="table table-bordered table-striped">
+        <tbody>
+          <tr>
+            <th class="text-nowrap col-xs-1">Name</th>
+            <td class="col-xs-11">{{resource_db.name}}</td>
+          </tr>
+          <tr>
+            <th class="text-nowrap col-xs-1">Content Type</th>
+            <td class="col-xs-11">{{resource_db.content_type}}</td>
+          </tr>
+          <tr>
+            <th class="text-nowrap col-xs-1">Size</th>
+            <td class="col-xs-11">{{resource_db.size_human}}</td>
+          </tr>
+          <tr>
+            <th class="text-nowrap col-xs-1">Created</th>
+            <td class="col-xs-11">
+              <time datetime="{{resource_db.created}}">
+                {{resource_db.created.strftime('%Y-%m-%d')}}
+              </time>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-nowrap col-xs-1">Modifed</th>
+            <td class="col-xs-11">
+              <time datetime="{{resource_db.modified}}">
+                {{resource_db.modified.strftime('%Y-%m-%d')}}
+              </time>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     # if resource_db.image_url
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="image-preview">
-          <img class="img-responsive img-thumbnail" src="{{resource_db.image_url}}=s512">
+          <img class="img-responsive img-thumbnail" src="{{resource_db.image_url}}=s1024">
         </div>
       </div>
     # endif

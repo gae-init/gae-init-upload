@@ -3,6 +3,11 @@
 
 # block content
   <div class="page-header">
+    <div class="pull-right">
+      <a class="btn btn-default" href="{{url_for('resource_upload')}}" title="Upload">
+        <span class="fa fa-plus fa-fw"></span> Upload
+      </a>
+    </div>
     <h1>
       {{title}}
     </h1>
@@ -24,33 +29,24 @@
     </thead>
     <tbody>
       # for resource_db in resource_dbs
-        <tr id="{{resource_db.key.urlsafe()}}">
-          <td class="ellipsis">
-            <a href="{{url_for('resource_view', resource_id=resource_db.key.id())}}">
-              {{resource_db.name}}
-            </a>
-          </td>
+        <tr id="{{resource_db.key.urlsafe()}}" class="row-link" data-href="{{url_for('resource_view', resource_id=resource_db.key.id())}}">
+          <td class="ellipsis">{{resource_db.name}}</td>
           <td class="hidden-xs">{{resource_db.content_type}}</td>
           <td class="hidden-xs">
             <time datetime="{{resource_db.created}}">
               {{resource_db.created.strftime('%Y-%m-%d')}}
             </time>
           </td>
-          <td class="text-right text-nowrap">
-            {{resource_db.size_human}}
-          </td>
-          <td class="text-nowrap">
-            <a class="btn btn-xs btn-primary" href="{{url_for('resource_update', resource_id=resource_db.key.id())}}">
-              <i class="fa fa-fw fa-edit"></i>
-            </a>
+          <td class="text-right text-nowrap">{{resource_db.size_human}}</td>
+          <td class="text-nowrap not-link">
             <a class="btn btn-xs btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
-              <i class="fa fa-fw fa-cloud-download"></i>
+              <span class="fa fa-fw fa-cloud-download"></span>
             </a>
             <button class="btn btn-xs btn-danger btn-delete"
                 data-api-url="{{url_for('api.resource', key=resource_db.key.urlsafe())}}"
                 data-target="#{{resource_db.key.urlsafe()}}"
               >
-              <i class="fa fa-fw fa-trash-o"></i>
+              <span class="fa fa-fw fa-trash-o"></span>
             </button>
           </td>
         </tr>

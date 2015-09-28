@@ -12,11 +12,8 @@
     <nav class="collapse navbar-collapse" role="navigation">
       <ul class="nav navbar-nav">
         # if current_user.id > 0
-          <li class="{{'active' if html_class == 'resource-upload' else ''}}">
-            <a href="{{url_for('resource_upload')}}"><i class="fa fa-cloud-upload"></i> Resource Upload</a>
-          </li>
           <li class="{{'active' if html_class == 'resource-list' else ''}}">
-            <a href="{{url_for('resource_list')}}"><i class="fa fa-th-list"></i> Resource List</a>
+            <a href="{{url_for('resource_list')}}"><span class="fa fa-fw fa-th-list"></span> Resource List</a>
           </li>
         # endif
         # include 'bit/contact_menu.html'

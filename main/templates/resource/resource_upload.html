@@ -1,8 +1,10 @@
 # extends 'base.html'
+# import 'macro/utils.html' as utils
 
 # block content
   <div class="page-header">
     <h1>
+      {{utils.back_link('Back', 'resource_list')}}
       {{title}}
     </h1>
   </div>
