@@ -1,41 +1,30 @@
-# import 'macro/forms.html' as forms
 # extends 'base.html'
+# import 'macro/forms.html' as forms
+# import 'macro/utils.html' as utils
 
 # block content
   <div class="page-header">
     <h1>
+      {{utils.back_link('Back', 'resource_view', resource_id=resource_db.key.id())}}
       {{title}}
     </h1>
   </div>
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <form class="form" method="POST" action=".">
         <fieldset>
           {{form.csrf_token}}
           {{forms.text_field(form.name)}}
 
-          <div class="form-group ">
-            <label class="control-label" for="content_type">Content Type</label>
-            <input class="form-control" id="content_type" name="content_type" type="text" value="{{resource_db.content_type}}" readonly>
-          </div>
-          <div class="form-group ">
-            <label class="control-label" for="size">Size</label>
-            <input class="form-control" id="size" name="size" type="text" value="{{resource_db.size_human}}" readonly>
-          </div>
-
           <button type="submit" class="btn btn-primary btn-block btn-loading" {{forms.data_loading_text()}}>
-            <i class="fa fa-save"></i> Save
+            Update
           </button>
-
-          <a class="btn btn-info btn-block" href="{{url_for('resource_view', resource_id=resource_db.key.id())}}">
-            <i class="fa fa-times"></i> Cancel
-          </a>
         </fieldset>
       </form>
     </div>
     # if resource_db.image_url
-      <div class="col-md-4">
+      <div class="col-md-6">
         <div class="image-preview">
           <img class="img-responsive img-thumbnail" src="{{resource_db.image_url}}=s512">
         </div>
