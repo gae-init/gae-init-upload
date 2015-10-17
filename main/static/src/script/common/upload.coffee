@@ -81,14 +81,15 @@
       xhr.upload.addEventListener 'progress', (event) ->
         progress(parseInt(event.loaded / event.total * 100.0))
 
-
-      xhr.onload = (event) =>
-        response = JSON.parse(event.currentTarget.response)
-        progress(100.0, response.result)
-        @active_files -= 1
-      xhr.onerror = () =>
-        progress(0, undefined, 'error')
-        @active_files -= 1
+      xhr.onreadystatechange = (event) =>
+        if xhr.readyState == 4
+          if xhr.status == 200
+            response = JSON.parse(xhr.responseText)
+            progress(100.0, response.result)
+            @active_files -= 1
+          else
+            progress(0, undefined, 'error')
+            @active_files -= 1
 
       xhr.open('POST', url, true)
       data = new FormData()
