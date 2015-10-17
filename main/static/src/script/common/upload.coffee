@@ -19,10 +19,10 @@
         @drop_area.on 'dragover', @file_drag_hover
         @drop_area.on 'dragleave', @file_drag_hover
         @drop_area.on 'drop', (e) =>
-          @file_select_handler(e)
+          @file_select_handler e
         @drop_area.show()
 
-      window.onbeforeunload = () =>
+      window.onbeforeunload = =>
         if @confirm_message? and @active_files > 0
           return @confirm_message
 
@@ -32,9 +32,9 @@
       e.stopPropagation()
       e.preventDefault()
       if e.type is 'dragover'
-        @drop_area.addClass('drag-hover')
+        @drop_area.addClass 'drag-hover'
       else
-        @drop_area.removeClass('drag-hover')
+        @drop_area.removeClass 'drag-hover'
 
     file_select_handler: (e) =>
       @file_drag_hover(e)
@@ -45,17 +45,17 @@
     upload_files: (files) =>
       @get_upload_urls files.length, (error, urls) =>
         if error
-          console.log('Error getting URLs', error)
+          console.log 'Error getting URLs', error
           return
-        @process_files(files, urls, 0)
+        @process_files files, urls, 0
 
     get_upload_urls: (n, callback) =>
       return if n <= 0
-      api_call 'GET', @upload_url, {count:n}, (error, result) ->
+      api_call 'GET', @upload_url, {count: n}, (error, result) ->
         if error
-          callback(error)
+          callback error
           throw error
-        callback(undefined, result)
+        callback undefined, result
 
     process_files: (files, urls, i) =>
       return if i >= files.length
@@ -66,34 +66,34 @@
       xhr = new XMLHttpRequest()
       if @allowed_types?.length > 0
         if file.type not in @allowed_types
-          progress(0, undefined, 'wrong_type')
+          progress 0, undefined, 'wrong_type'
           callback()
           return
 
       if @max_size?
         if file.size > @max_size
-          progress(0, undefined, 'too_big')
+          progress 0, undefined, 'too_big'
           callback()
           return
 
       @active_files += 1
 
       xhr.upload.addEventListener 'progress', (event) ->
-        progress(parseInt(event.loaded / event.total * 100.0))
+        progress parseInt event.loaded / event.total * 100.0
 
       xhr.onreadystatechange = (event) =>
         if xhr.readyState == 4
           if xhr.status == 200
             response = JSON.parse(xhr.responseText)
-            progress(100.0, response.result)
+            progress 100.0, response.result
             @active_files -= 1
           else
-            progress(0, undefined, 'error')
+            progress 0, undefined, 'error'
             @active_files -= 1
 
-      xhr.open('POST', url, true)
+      xhr.open 'POST', url, true
       data = new FormData()
-      data.append('file', file)
-      xhr.send(data)
+      data.append 'file', file
+      xhr.send data
       callback()
 )()
