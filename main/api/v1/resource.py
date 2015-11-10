@@ -73,19 +73,18 @@ class ResourceAPI(restful.Resource):
 class ResourceUploadAPI(restful.Resource):
   @auth.login_required
   def get(self):
-    if flask.request.method == 'GET':
-      count = util.param('count', int) or 1
-      urls = []
-      for i in range(count):
-        urls.append({'upload_url': blobstore.create_upload_url(
-            flask.request.path,
-            gs_bucket_name=config.CONFIG_DB.bucket_name or None,
-          )})
-      return flask.jsonify({
-          'status': 'success',
-          'count': count,
-          'result': urls,
-        })
+    count = util.param('count', int) or 1
+    urls = []
+    for i in range(count):
+      urls.append({'upload_url': blobstore.create_upload_url(
+          flask.request.path,
+          gs_bucket_name=config.CONFIG_DB.bucket_name or None,
+        )})
+    return flask.jsonify({
+        'status': 'success',
+        'count': count,
+        'result': urls,
+      })
 
   @auth.login_required
   def post(self):
