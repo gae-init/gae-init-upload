@@ -91,8 +91,7 @@ class ResourceUploadAPI(restful.Resource):
     resource_db = resource_db_from_upload()
     if resource_db:
       return helpers.make_response(resource_db, model.Resource.FIELDS)
-    else:
-      flask.abort(500)
+    flask.abort(500)
 
 
 ###############################################################################
