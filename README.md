@@ -1,6 +1,8 @@
 gae-init-upload
 ===============
 
+[![Slack Status](https://gae-init-slack.herokuapp.com/badge.svg)](https://gae-init-slack.herokuapp.com)
+
 **gae-init-upload** is the easiest way to kick start new applications on Google
 App Engine using Flask, Bootstrap, Google Cloud Storage and tons of other cool
 features.
