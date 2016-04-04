@@ -27,16 +27,16 @@ class Resource(model.Base):
   def download_url(self):
     if self.key:
       return flask.url_for(
-          'resource_download', resource_id=self.key.id(), _external=True
-        )
+        'resource_download', resource_id=self.key.id(), _external=True
+      )
     return None
 
   @property
   def view_url(self):
     if self.key:
       return flask.url_for(
-          'resource_view', resource_id=self.key.id(), _external=True,
-        )
+        'resource_view', resource_id=self.key.id(), _external=True,
+      )
     return None
 
   @property
@@ -44,15 +44,15 @@ class Resource(model.Base):
     return '%s/serve/%s' % (flask.request.url_root[:-1], self.blob_key)
 
   FIELDS = {
-      'bucket_name': fields.String,
-      'content_type': fields.String,
-      'download_url': fields.String,
-      'image_url': fields.String,
-      'name': fields.String,
-      'serve_url': fields.String,
-      'size': fields.Integer,
-      'size_human': fields.String,
-      'view_url': fields.String,
-    }
+    'bucket_name': fields.String,
+    'content_type': fields.String,
+    'download_url': fields.String,
+    'image_url': fields.String,
+    'name': fields.String,
+    'serve_url': fields.String,
+    'size': fields.Integer,
+    'size_human': fields.String,
+    'view_url': fields.String,
+  }
 
   FIELDS.update(model.Base.FIELDS)

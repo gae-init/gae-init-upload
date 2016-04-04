@@ -15,46 +15,46 @@ import util
 from main import app
 
 
-################################################################################
+###############################################################################
 # Upload
-################################################################################
+###############################################################################
 @app.route('/resource/upload/')
 @auth.login_required
 def resource_upload():
   return flask.render_template(
-      'resource/resource_upload.html',
-      title='Resource Upload',
-      html_class='resource-upload',
-      get_upload_url=flask.url_for('api.resource.upload'),
-      has_json=True,
-      upload_url=blobstore.create_upload_url(
-          flask.request.path,
-          gs_bucket_name=config.CONFIG_DB.bucket_name or None,
-        ),
-    )
+    'resource/resource_upload.html',
+    title='Resource Upload',
+    html_class='resource-upload',
+    get_upload_url=flask.url_for('api.resource.upload'),
+    has_json=True,
+    upload_url=blobstore.create_upload_url(
+      flask.request.path,
+      gs_bucket_name=config.CONFIG_DB.bucket_name or None,
+    ),
+  )
 
 
-################################################################################
+###############################################################################
 # List
-################################################################################
+###############################################################################
 @app.route('/resource/', endpoint='resource_list')
 @auth.login_required
 def resource_list():
   resource_dbs, resource_cursor = auth.current_user_db().get_resource_dbs()
 
   return flask.render_template(
-      'resource/resource_list.html',
-      html_class='resource-list',
-      title='Resource List',
-      resource_dbs=resource_dbs,
-      next_url=util.generate_next_url(resource_cursor),
-      api_url=flask.url_for('api.resource.list'),
-    )
+    'resource/resource_list.html',
+    html_class='resource-list',
+    title='Resource List',
+    resource_dbs=resource_dbs,
+    next_url=util.generate_next_url(resource_cursor),
+    api_url=flask.url_for('api.resource.list'),
+  )
 
 
-################################################################################
+###############################################################################
 # View
-################################################################################
+###############################################################################
 @app.route('/resource/<int:resource_id>/', endpoint='resource_view')
 @auth.login_required
 def resource_view(resource_id):
@@ -64,17 +64,17 @@ def resource_view(resource_id):
     return flask.abort(404)
 
   return flask.render_template(
-      'resource/resource_view.html',
-      html_class='resource-view',
-      title='%s' % (resource_db.name),
-      resource_db=resource_db,
-      api_url=flask.url_for('api.resource', key=resource_db.key.urlsafe()),
-    )
+    'resource/resource_view.html',
+    html_class='resource-view',
+    title='%s' % (resource_db.name),
+    resource_db=resource_db,
+    api_url=flask.url_for('api.resource', key=resource_db.key.urlsafe()),
+  )
 
 
-################################################################################
+###############################################################################
 # Update
-################################################################################
+###############################################################################
 class ResourceUpdateForm(wtf.Form):
   name = wtforms.TextField('Name', [wtforms.validators.required()])
 
@@ -93,22 +93,22 @@ def resource_update(resource_id):
     form.populate_obj(resource_db)
     resource_db.put()
     return flask.redirect(flask.url_for(
-        'resource_view', resource_id=resource_db.key.id(),
-      ))
+      'resource_view', resource_id=resource_db.key.id(),
+    ))
 
   return flask.render_template(
-      'resource/resource_update.html',
-      html_class='resource-update',
-      title='%s' % (resource_db.name),
-      resource_db=resource_db,
-      form=form,
-      api_url=flask.url_for('api.resource', key=resource_db.key.urlsafe()),
-    )
+    'resource/resource_update.html',
+    html_class='resource-update',
+    title='%s' % (resource_db.name),
+    resource_db=resource_db,
+    form=form,
+    api_url=flask.url_for('api.resource', key=resource_db.key.urlsafe()),
+  )
 
 
-################################################################################
+###############################################################################
 # Download
-################################################################################
+###############################################################################
 @app.route('/resource/<int:resource_id>/download/')
 @auth.login_required
 def resource_download(resource_id):
