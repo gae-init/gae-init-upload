@@ -2,11 +2,11 @@
 
 from __future__ import absolute_import
 
-from flask.ext import restful
 from google.appengine.api import images
 from google.appengine.ext import blobstore
 from google.appengine.ext import ndb
 import flask
+import flask_restful
 import werkzeug
 
 from api import helpers
@@ -22,7 +22,7 @@ from main import api_v1
 # Endpoints
 ###############################################################################
 @api_v1.resource('/resource/', endpoint='api.resource.list')
-class ResourceListAPI(restful.Resource):
+class ResourceListAPI(flask_restful.Resource):
   @auth.admin_required
   def get(self):
     resource_keys = util.param('resource_keys', list)
@@ -52,7 +52,7 @@ class ResourceListAPI(restful.Resource):
 
 
 @api_v1.resource('/resource/<string:key>/', endpoint='api.resource')
-class ResourceAPI(restful.Resource):
+class ResourceAPI(flask_restful.Resource):
   @auth.login_required
   def get(self, key):
     resource_db = ndb.Key(urlsafe=key).get()
@@ -70,7 +70,7 @@ class ResourceAPI(restful.Resource):
 
 
 @api_v1.resource('/resource/upload/', endpoint='api.resource.upload')
-class ResourceUploadAPI(restful.Resource):
+class ResourceUploadAPI(flask_restful.Resource):
   @auth.login_required
   def get(self):
     count = util.param('count', int) or 1

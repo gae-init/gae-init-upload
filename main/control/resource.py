@@ -2,9 +2,9 @@
 
 import urllib
 
-from flask.ext import wtf
 from google.appengine.ext import blobstore
 import flask
+import flask_wtf
 import wtforms
 
 import auth
@@ -75,7 +75,7 @@ def resource_view(resource_id):
 ###############################################################################
 # Update
 ###############################################################################
-class ResourceUpdateForm(wtf.Form):
+class ResourceUpdateForm(flask_wtf.Form):
   name = wtforms.TextField('Name', [wtforms.validators.required()])
 
 

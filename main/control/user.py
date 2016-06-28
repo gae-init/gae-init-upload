@@ -2,13 +2,13 @@
 
 import copy
 
-from flask.ext import login
-from flask.ext import wtf
 from google.appengine.ext import deferred
 from google.appengine.ext import ndb
-from webargs.flaskparser import parser
 from webargs import fields as wf
+from webargs.flaskparser import parser
 import flask
+import flask_login
+import flask_wtf
 import wtforms
 
 import auth
@@ -51,7 +51,7 @@ def user_list():
 ###############################################################################
 # User Update
 ###############################################################################
-class UserUpdateForm(wtf.Form):
+class UserUpdateForm(flask_wtf.Form):
   username = wtforms.StringField(
     model.User.username._verbose_name,
     [wtforms.validators.required(), wtforms.validators.length(min=2)],
@@ -147,13 +147,13 @@ def user_verify(token):
 ###############################################################################
 # User Forgot
 ###############################################################################
-class UserForgotForm(wtf.Form):
+class UserForgotForm(flask_wtf.Form):
   email = wtforms.StringField(
     'Email',
     [wtforms.validators.required(), wtforms.validators.email()],
     filters=[util.email_filter],
   )
-  recaptcha = wtf.RecaptchaField()
+  recaptcha = flask_wtf.RecaptchaField()
 
 
 @app.route('/user/forgot/', methods=['GET', 'POST'])
@@ -196,7 +196,7 @@ def user_forgot(token=None):
 ###############################################################################
 # User Reset
 ###############################################################################
-class UserResetForm(wtf.Form):
+class UserResetForm(flask_wtf.Form):
   new_password = wtforms.StringField(
     'New Password',
     [wtforms.validators.required(), wtforms.validators.length(min=6)],
@@ -212,7 +212,7 @@ def user_reset(token=None):
     return flask.redirect(flask.url_for('welcome'))
 
   if auth.is_logged_in():
-    login.logout_user()
+    flask_login.logout_user()
     return flask.redirect(flask.request.path)
 
   form = UserResetForm()
@@ -236,7 +236,7 @@ def user_reset(token=None):
 ###############################################################################
 # User Activate
 ###############################################################################
-class UserActivateForm(wtf.Form):
+class UserActivateForm(flask_wtf.Form):
   name = wtforms.StringField(
     model.User.name._verbose_name,
     [wtforms.validators.required()], filters=[util.strip_filter],
@@ -250,7 +250,7 @@ class UserActivateForm(wtf.Form):
 @app.route('/user/activate/<token>/', methods=['GET', 'POST'])
 def user_activate(token):
   if auth.is_logged_in():
-    login.logout_user()
+    flask_login.logout_user()
     return flask.redirect(flask.request.path)
 
   user_db = model.User.get_by('token', token)
@@ -279,7 +279,7 @@ def user_activate(token):
 ###############################################################################
 # User Merge
 ###############################################################################
-class UserMergeForm(wtf.Form):
+class UserMergeForm(flask_wtf.Form):
   user_key = wtforms.StringField('User Key', [wtforms.validators.required()])
   user_keys = wtforms.StringField('User Keys', [wtforms.validators.required()])
   username = wtforms.StringField('Username', [wtforms.validators.optional()])
