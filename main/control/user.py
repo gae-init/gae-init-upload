@@ -51,7 +51,7 @@ def user_list():
 ###############################################################################
 # User Update
 ###############################################################################
-class UserUpdateForm(flask_wtf.Form):
+class UserUpdateForm(flask_wtf.FlaskForm):
   username = wtforms.StringField(
     model.User.username._verbose_name,
     [wtforms.validators.required(), wtforms.validators.length(min=2)],
@@ -147,7 +147,7 @@ def user_verify(token):
 ###############################################################################
 # User Forgot
 ###############################################################################
-class UserForgotForm(flask_wtf.Form):
+class UserForgotForm(flask_wtf.FlaskForm):
   email = wtforms.StringField(
     'Email',
     [wtforms.validators.required(), wtforms.validators.email()],
@@ -196,7 +196,7 @@ def user_forgot(token=None):
 ###############################################################################
 # User Reset
 ###############################################################################
-class UserResetForm(flask_wtf.Form):
+class UserResetForm(flask_wtf.FlaskForm):
   new_password = wtforms.StringField(
     'New Password',
     [wtforms.validators.required(), wtforms.validators.length(min=6)],
@@ -236,7 +236,7 @@ def user_reset(token=None):
 ###############################################################################
 # User Activate
 ###############################################################################
-class UserActivateForm(flask_wtf.Form):
+class UserActivateForm(flask_wtf.FlaskForm):
   name = wtforms.StringField(
     model.User.name._verbose_name,
     [wtforms.validators.required()], filters=[util.strip_filter],
@@ -279,7 +279,7 @@ def user_activate(token):
 ###############################################################################
 # User Merge
 ###############################################################################
-class UserMergeForm(flask_wtf.Form):
+class UserMergeForm(flask_wtf.FlaskForm):
   user_key = wtforms.StringField('User Key', [wtforms.validators.required()])
   user_keys = wtforms.StringField('User Keys', [wtforms.validators.required()])
   username = wtforms.StringField('Username', [wtforms.validators.optional()])
