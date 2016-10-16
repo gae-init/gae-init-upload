@@ -75,7 +75,7 @@ def resource_view(resource_id):
 ###############################################################################
 # Update
 ###############################################################################
-class ResourceUpdateForm(flask_wtf.Form):
+class ResourceUpdateForm(flask_wtf.FlaskForm):
   name = wtforms.TextField('Name', [wtforms.validators.required()])
 
 
