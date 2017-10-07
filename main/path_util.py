@@ -10,7 +10,7 @@ def path_package_path(deps_path, shadow_pkgs):
   for _, pkg, ispkg in pkgutil.iter_modules():
     if ispkg and pkg in shadow_pkgs:
       global_pkg = __import__(pkg)
-      global_pkg.__path__.append('%s/%s' % (deps_path, pkg))
+      global_pkg.__path__.insert(0, '%s/%s' % (deps_path, pkg))
 
 
 def is_shadowing(package_name):
@@ -54,4 +54,3 @@ def sys_path_insert(dirname):
     path_package_path(dirname, get_shadows_zip(dirname))
   else:
     path_package_path(dirname, get_shadows_dir(dirname))
-
