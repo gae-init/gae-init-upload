@@ -101,16 +101,15 @@ window.showNotification = (message, category) => {
   );
 };
 
-
-window.sizeHuman = (nbytes) => {
+window.sizeHuman = nbytes => {
   const ref = ['B', 'KB', 'MB', 'GB', 'TB'];
-  for (const index = 0, len = ref.length; index < len; index++) {
+  for (let index = 0, len = ref.length; index < len; index++) {
     const suffix = ref[index];
     if (nbytes < 1000) {
       if (suffix === 'B') {
         return `${nbytes} ${suffix}`;
       }
-      return `${(parseInt(nbytes * 10) / 10)} ${suffix}`;
+      return `${parseInt(nbytes * 10) / 10} ${suffix}`;
     }
     nbytes /= 1024.0;
   }

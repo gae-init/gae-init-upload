@@ -14,15 +14,14 @@ $(() => {
   });
 
   $('html.resource-list').each(() => {
-  initResourceList()
+    initResourceList();
   });
 
   $('html.resource-view').each(() => {
-    initResourceView()
-    });
+    initResourceView();
+  });
 
   $('html.resource-upload').each(() => {
-    initResourceUpload()
-    });
-
+    initResourceUpload();
+  });
 });
