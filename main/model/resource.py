@@ -20,8 +20,8 @@ class Resource(model.Base):
   size = ndb.IntegerProperty(default=0)
 
   @ndb.ComputedProperty
-  def size_human(self):
-    return util.size_human(self.size or 0)
+  def sizeHuman(self):
+    return util.sizeHuman(self.size or 0)
 
   @property
   def download_url(self):
@@ -51,7 +51,7 @@ class Resource(model.Base):
     'name': fields.String,
     'serve_url': fields.String,
     'size': fields.Integer,
-    'size_human': fields.String,
+    'sizeHuman': fields.String,
     'view_url': fields.String,
   }
 

@@ -37,7 +37,7 @@
               {{resource_db.created.strftime('%Y-%m-%d')}}
             </time>
           </td>
-          <td class="text-right text-nowrap">{{resource_db.size_human}}</td>
+          <td class="text-right text-nowrap">{{resource_db.sizeHuman}}</td>
           <td class="text-nowrap not-link">
             <a class="btn btn-xs btn-success" href="{{url_for('resource_download', resource_id=resource_db.key.id())}}">
               <span class="fa fa-fw fa-cloud-download"></span>

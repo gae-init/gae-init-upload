@@ -159,7 +159,7 @@ def uuid():
   return uuid4().hex
 
 
-def size_human(nbytes):
+def sizeHuman(nbytes):
   for suffix in ['B', 'KB', 'MB', 'GB', 'TB']:
     if nbytes < 1000:
       if suffix == 'B':

@@ -1,10 +1,10 @@
-window.init_resource_list = () ->
+window.initResourceList = () ->
   init_delete_resource_button()
 
-window.init_resource_view = () ->
+window.initResourceView = () ->
   init_delete_resource_button()
 
-window.init_resource_upload = () ->
+window.initResourceUpload = () ->
   if window.File and window.FileList and window.FileReader
     window.file_uploader = new FileUploader
       upload_handler: upload_handler
@@ -46,7 +46,7 @@ upload_handler =
         $('.progress-bar', $resource).css('width', '100%')
         $('.progress-bar', $resource).addClass('progress-bar-danger')
         if error == 'too_big'
-          $('.progress-text', $resource).text("Failed! Too big, max: #{size_human(file_uploader.max_size)}.")
+          $('.progress-text', $resource).text("Failed! Too big, max: #{sizeHuman(file_uploader.max_size)}.")
         else if error == 'wrong_type'
           $('.progress-text', $resource).text("Failed! Wrong file type.")
         else
@@ -55,7 +55,7 @@ upload_handler =
 
       if progress == 100.0 and resource
         $('.progress-bar', $resource).addClass('progress-bar-success')
-        $('.progress-text', $resource).text("Success #{size_human(file.size)}")
+        $('.progress-text', $resource).text("Success #{sizeHuman(file.size)}")
         if resource.image_url and $preview.text().length > 0
           $preview.css('background-image', "url(#{resource.image_url})")
           $preview.text('')
@@ -64,7 +64,7 @@ upload_handler =
         $('.progress-text', $resource).text("100% - Processing..")
       else
         $('.progress-bar', $resource).css('width', "#{progress}%")
-        $('.progress-text', $resource).text("#{progress}% of #{size_human(file.size)}")
+        $('.progress-text', $resource).text("#{progress}% of #{sizeHuman(file.size)}")
 
 
 window.init_delete_resource_button = () ->
