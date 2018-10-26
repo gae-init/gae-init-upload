@@ -51,7 +51,7 @@
 
     get_upload_urls: (n, callback) =>
       return if n <= 0
-      api_call 'GET', @upload_url, {count: n}, (error, result) ->
+      apiCall 'GET', @upload_url, {count: n}, (error, result) ->
         if error
           callback error
           throw error

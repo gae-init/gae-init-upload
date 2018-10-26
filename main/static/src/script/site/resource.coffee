@@ -72,7 +72,7 @@ window.init_delete_resource_button = () ->
     e.preventDefault()
     if confirm('Press OK to delete the resource')
       $(this).attr('disabled', 'disabled')
-      api_call 'DELETE', $(this).data('api-url'), (err, result) =>
+      apiCall 'DELETE', $(this).data('api-url'), (err, result) =>
         if err
           $(this).removeAttr('disabled')
           LOG 'Something went terribly wrong during delete!', err
