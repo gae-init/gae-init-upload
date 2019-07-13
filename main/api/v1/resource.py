@@ -97,17 +97,8 @@ class ResourceUploadAPI(flask_restful.Resource):
 ###############################################################################
 # Helpers
 ###############################################################################
-@ndb.transactional(xg=True)
 def delete_resource_dbs(resource_db_keys):
-  for resource_key in resource_db_keys:
-    delete_resource_key(resource_key)
-
-
-def delete_resource_key(resource_key):
-  resource_db = resource_key.get()
-  if resource_db:
-    blobstore.BlobInfo.get(resource_db.blob_key).delete()
-    resource_db.key.delete()
+  ndb.delete_multi(resource_db_keys)
 
 
 def resource_db_from_upload():

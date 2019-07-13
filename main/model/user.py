@@ -88,6 +88,12 @@ class User(model.Base):
   def get_resource_dbs(self, **kwargs):
     return model.Resource.get_dbs(user_key=self.key, **kwargs)
 
+  @classmethod
+  def _pre_delete_hook(cls, key):
+    user_db = key.get()
+    resource_keys = user_db.get_resource_dbs(keys_only=True, limit=-1)[0]
+    ndb.delete_multi(resource_keys)
+
   FIELDS = {
     'active': fields.Boolean,
     'admin': fields.Boolean,

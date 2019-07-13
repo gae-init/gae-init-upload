@@ -65,30 +65,5 @@ class AdminUserAPI(flask_restful.Resource):
 ###############################################################################
 # Helpers
 ###############################################################################
-@ndb.transactional(xg=True)
 def delete_user_dbs(user_db_keys):
-  for user_key in user_db_keys:
-    delete_user_task(user_key)
-
-
-def delete_user_task(user_key, next_cursor=None):
-  resource_dbs, next_cursor = util.get_dbs(
-      model.Resource.query(),
-      user_key=user_key,
-      cursor=next_cursor,
-    )
-  if resource_dbs:
-    for resource_db in resource_dbs:
-      try:
-        blobstore.BlobInfo.get(resource_db.blob_key).delete()
-      except AttributeError:
-        logging.error('Blob %s not found during delete (resource_key: %s)' % (
-            resource_db.blob_key, resource_db.key().urlsafe(),
-          ))
-
-    ndb.delete_multi([resource_db.key for resource_db in resource_dbs])
-
-  if next_cursor:
-    deferred.defer(delete_user_task, user_key, next_cursor)
-  else:
-    user_key.delete()
+  ndb.delete_multi(user_db_keys)
